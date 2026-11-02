@@ -159,7 +159,19 @@ def openai_event(row: Mapping[str, Any], actor_default: Optional[str] = None,
         outcome = "error"
     else:
         raw_outcome = _value(row, "outcome", "status", default="success")
-        outcome = raw_outcome.lower() if isinstance(raw_outcome, str) and raw_outcome in OUTCOMES else "success"
+        if not isinstance(raw_outcome, str):
+            raise ValidationError(
+                f"Unrecognized outcome {raw_outcome!r}.",
+                f"the event contract allows: {', '.join(OUTCOMES)}.",
+                "fix the producer outcome or map it explicitly.",
+            )
+        outcome = raw_outcome.strip().lower()
+        if outcome not in OUTCOMES:
+            raise ValidationError(
+                f"Unknown outcome '{raw_outcome}'.",
+                f"the event contract allows: {', '.join(OUTCOMES)}.",
+                "fix the producer outcome or map it explicitly.",
+            )
     ts = _value(row, "ts", "timestamp", "time", "created_at")
     return Event.create(
         actor, action,
@@ -213,7 +225,19 @@ def langgraph_event(row: Mapping[str, Any], actor_default: Optional[str] = None,
             metadata["error"] = err_val
     else:
         raw_outcome = _value(row, "outcome", "status", default="success")
-        outcome = raw_outcome.lower() if isinstance(raw_outcome, str) and raw_outcome in OUTCOMES else "success"
+        if not isinstance(raw_outcome, str):
+            raise ValidationError(
+                f"Unrecognized outcome {raw_outcome!r}.",
+                f"the event contract allows: {', '.join(OUTCOMES)}.",
+                "fix the producer outcome or map it explicitly.",
+            )
+        outcome = raw_outcome.strip().lower()
+        if outcome not in OUTCOMES:
+            raise ValidationError(
+                f"Unknown outcome '{raw_outcome}'.",
+                f"the event contract allows: {', '.join(OUTCOMES)}.",
+                "fix the producer outcome or map it explicitly.",
+            )
     ts = _value(row, "ts", "timestamp", "time")
     return Event.create(
         actor, action,
@@ -259,7 +283,19 @@ def crewai_event(row: Mapping[str, Any], actor_default: Optional[str] = None,
         metadata["error"] = row["error"]
     else:
         raw_outcome = _value(row, "outcome", "status", default="success")
-        outcome = raw_outcome.lower() if isinstance(raw_outcome, str) and raw_outcome in OUTCOMES else "success"
+        if not isinstance(raw_outcome, str):
+            raise ValidationError(
+                f"Unrecognized outcome {raw_outcome!r}.",
+                f"the event contract allows: {', '.join(OUTCOMES)}.",
+                "fix the producer outcome or map it explicitly.",
+            )
+        outcome = raw_outcome.strip().lower()
+        if outcome not in OUTCOMES:
+            raise ValidationError(
+                f"Unknown outcome '{raw_outcome}'.",
+                f"the event contract allows: {', '.join(OUTCOMES)}.",
+                "fix the producer outcome or map it explicitly.",
+            )
     ts = _value(row, "ts", "timestamp", "time")
     return Event.create(
         actor, action,

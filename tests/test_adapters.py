@@ -142,6 +142,16 @@ class OpenAiAdapterTests(unittest.TestCase):
         self.assertEqual(event.outcome, "error")
         self.assertEqual(event.metadata["error"], "Connection timed out")
 
+    def test_unknown_outcome_is_rejected(self):
+        with self.assertRaises(ValidationError):
+            openai_event({"actor": "agent:a", "name": "tool1", "outcome": "failed"})
+        with self.assertRaises(ValidationError):
+            openai_event({"actor": "agent:a", "name": "tool1", "status": 500})
+
+    def test_outcome_is_normalized(self):
+        event = openai_event({"actor": "agent:a", "name": "tool1", "outcome": " ERROR "})
+        self.assertEqual(event.outcome, "error")
+
 
 class LangGraphAdapterTests(unittest.TestCase):
     def test_on_tool_end_event(self):
@@ -196,6 +206,16 @@ class LangGraphAdapterTests(unittest.TestCase):
         event = langgraph_event(row)
         self.assertEqual(event.outcome, "error")
 
+    def test_unknown_outcome_is_rejected(self):
+        with self.assertRaises(ValidationError):
+            langgraph_event({"actor": "agent:a", "name": "tool1", "outcome": "failed"})
+        with self.assertRaises(ValidationError):
+            langgraph_event({"actor": "agent:a", "name": "tool1", "status": 500})
+
+    def test_outcome_is_normalized(self):
+        event = langgraph_event({"actor": "agent:a", "name": "tool1", "outcome": " ERROR "})
+        self.assertEqual(event.outcome, "error")
+
 
 class CrewAiAdapterTests(unittest.TestCase):
     def test_agent_tool_execution(self):
@@ -225,6 +245,16 @@ class CrewAiAdapterTests(unittest.TestCase):
         self.assertEqual(event.actor, "Customer Support Lead")
         self.assertEqual(event.action, "issue_refund")
         self.assertEqual(event.metadata["amount"], 49.99)
+
+    def test_unknown_outcome_is_rejected(self):
+        with self.assertRaises(ValidationError):
+            crewai_event({"agent": "agent:a", "tool": "t1", "outcome": "failed"})
+        with self.assertRaises(ValidationError):
+            crewai_event({"agent": "agent:a", "tool": "t1", "status": 500})
+
+    def test_outcome_is_normalized(self):
+        event = crewai_event({"agent": "agent:a", "tool": "t1", "outcome": " ERROR "})
+        self.assertEqual(event.outcome, "error")
 
 
 class AdapterDispatcherTests(unittest.TestCase):

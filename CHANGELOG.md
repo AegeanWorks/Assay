@@ -26,6 +26,7 @@ project uses semantic versioning.
 ### Fixed
 
 - Generic ingestion now rejects an unknown outcome value instead of silently recording it as `success`.
+- OpenAI, LangGraph and CrewAI ingestion now reject an unknown outcome and normalize case/whitespace instead of silently recording `success`.
 - Ledger appends now refuse a malformed tail hash or a negative sequence instead of extending a corrupt chain.
 
 ## [0.1.0] - 2026-10-23

@@ -86,6 +86,40 @@ class McpAdapterTests(unittest.TestCase):
         event = mcp_event(row)
         self.assertEqual(event.outcome, "error")
 
+    def test_unknown_outcome_is_rejected(self):
+        with self.assertRaises(ValidationError):
+            mcp_event({
+                "method": "tools/call",
+                "params": {"name": "t1", "arguments": {}},
+                "actor": "agent:a",
+                "outcome": "failed",
+            })
+        with self.assertRaises(ValidationError):
+            mcp_event({
+                "method": "tools/call",
+                "params": {"name": "t1", "arguments": {}},
+                "actor": "agent:a",
+                "status": 500,
+            })
+
+    def test_outcome_is_normalized(self):
+        event = mcp_event({
+            "method": "tools/call",
+            "params": {"name": "t1", "arguments": {}},
+            "actor": "agent:a",
+            "outcome": " ERROR ",
+        })
+        self.assertEqual(event.outcome, "error")
+
+    def test_explicit_denied_is_preserved(self):
+        event = mcp_event({
+            "method": "tools/call",
+            "params": {"name": "t1", "arguments": {}},
+            "actor": "agent:a",
+            "outcome": "denied",
+        })
+        self.assertEqual(event.outcome, "denied")
+
 
 class OpenAiAdapterTests(unittest.TestCase):
     def test_tool_call_with_string_arguments(self):

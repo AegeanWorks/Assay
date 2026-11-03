@@ -23,3 +23,5 @@ evidence.json
 evidence.md
 assay-evidence.json
 assay-evidence.md
+# AIKit transient state
+.aikit/*.log

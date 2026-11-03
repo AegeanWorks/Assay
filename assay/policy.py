@@ -325,8 +325,10 @@ def load_policy(target: Union[Path, str]) -> Policy:
         if cleaned.startswith("pack:"):
             return load_pack(cleaned[5:])
         path = Path(cleaned)
-        if not path.is_file() and (PACKS_DIR / f"{cleaned}.json").is_file():
-            return load_pack(cleaned)
+        if not path.is_file():
+            base = cleaned[:-5] if cleaned.endswith(".json") else cleaned
+            if (PACKS_DIR / f"{base}.json").is_file():
+                return load_pack(base)
     else:
         path = Path(target)
     try:

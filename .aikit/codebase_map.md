@@ -9,8 +9,8 @@
 - **Total Python Modules**: `23`
 - **Total Classes**: `37`
 - **Total Top-Level Functions**: `79`
-- **Total Class Methods**: `178`
-- **Total Source Lines**: `4102`
+- **Total Class Methods**: `182`
+- **Total Source Lines**: `4158`
 
 ---
 
@@ -33,7 +33,7 @@
 ### [`assay/adapters.py`](assay/adapters.py)
 > *Adapters that transform event telemetry from major agent frameworks into Assay events.*
 
-**Size**: `364` lines (`15826` bytes)
+**Size**: `380` lines (`16512` bytes)
 
 **Functions:**
 - `def _value(row, *names, default)`
@@ -198,7 +198,7 @@
 ### [`assay/policy.py`](assay/policy.py)
 > *Declarative agent policy evaluation and retrospective findings.*
 
-**Size**: `382` lines (`15173` bytes)
+**Size**: `384` lines (`15257` bytes)
 
 **Classes:**
 - `class Rule` - *One first-match policy rule; `*` is the only glob supported in `action`.*
@@ -273,7 +273,7 @@
 ### [`tests/test_adapters.py`](tests/test_adapters.py)
 > *Agent framework adapter tests for MCP, OpenAI, LangGraph, and CrewAI.*
 
-**Size**: `284` lines (`10514` bytes)
+**Size**: `318` lines (`11660` bytes)
 
 **Classes:**
 - `class GenericAdapterTests`
@@ -286,6 +286,9 @@
   - Method `.test_tools_call_event()`
   - Method `.test_non_tool_call_returns_none()`
   - Method `.test_error_result()`
+  - Method `.test_unknown_outcome_is_rejected()`
+  - Method `.test_outcome_is_normalized()`
+  - Method `.test_explicit_denied_is_preserved()`
 - `class OpenAiAdapterTests`
   - Method `.test_tool_call_with_string_arguments()`
   - Method `.test_tool_call_with_dict_arguments()`
@@ -464,7 +467,7 @@
 ### [`tests/test_policy.py`](tests/test_policy.py)
 > *Policy parsing, matching and finding tests.*
 
-**Size**: `274` lines (`11635` bytes)
+**Size**: `278` lines (`11808` bytes)
 
 **Classes:**
 - `class PolicyEvaluationTests`
@@ -492,6 +495,7 @@
   - Method `.test_list_packs()`
   - Method `.test_load_all_built_in_packs()`
   - Method `.test_load_policy_pack_resolution()`
+  - Method `.test_load_policy_bare_json_pack_name()`
   - Method `.test_unknown_pack_raises_validation_error()`
   - Method `.test_payments_pack_rules()`
   - Method `.test_production_change_pack_rules()`

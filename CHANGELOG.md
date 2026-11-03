@@ -27,6 +27,8 @@ project uses semantic versioning.
 
 - Generic ingestion now rejects an unknown outcome value instead of silently recording it as `success`.
 - OpenAI, LangGraph and CrewAI ingestion now reject an unknown outcome and normalize case/whitespace instead of silently recording `success`.
+- MCP ingestion now rejects an unknown outcome, normalizes case/whitespace and preserves explicit `denied`/`pending` instead of silently recording `success` unless `isError` forces `error`.
+- Bare `payments.json` policy names now resolve to the built-in pack instead of failing with a file-not-found error.
 - Ledger appends now refuse a malformed tail hash or a negative sequence instead of extending a corrupt chain.
 
 ## [0.1.0] - 2026-10-23

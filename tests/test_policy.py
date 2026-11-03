@@ -224,6 +224,10 @@ class PolicyPackTests(unittest.TestCase):
         self.assertEqual(p1.digest, p3.digest)
         self.assertEqual(p1.name, "payments-guardrail")
 
+    def test_load_policy_bare_json_pack_name(self):
+        expected = load_pack("payments")
+        self.assertEqual(load_policy("payments.json").digest, expected.digest)
+
     def test_unknown_pack_raises_validation_error(self):
         with self.assertRaises(ValidationError) as ctx:
             load_pack("nonexistent_domain")

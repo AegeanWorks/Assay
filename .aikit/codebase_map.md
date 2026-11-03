@@ -9,8 +9,8 @@
 - **Total Python Modules**: `23`
 - **Total Classes**: `37`
 - **Total Top-Level Functions**: `79`
-- **Total Class Methods**: `182`
-- **Total Source Lines**: `4158`
+- **Total Class Methods**: `194`
+- **Total Source Lines**: `4275`
 
 ---
 
@@ -33,7 +33,7 @@
 ### [`assay/adapters.py`](assay/adapters.py)
 > *Adapters that transform event telemetry from major agent frameworks into Assay events.*
 
-**Size**: `380` lines (`16512` bytes)
+**Size**: `381` lines (`16589` bytes)
 
 **Functions:**
 - `def _value(row, *names, default)`
@@ -82,7 +82,7 @@
 ### [`assay/cli.py`](assay/cli.py)
 > *Command-line interface for recording, verifying and reviewing agent evidence.*
 
-**Size**: `505` lines (`21139` bytes)
+**Size**: `514` lines (`21660` bytes)
 
 **Classes:**
 - `class Parser` - *Turn argument errors into the Assay triad instead of an unlabelled usage dump.*
@@ -146,7 +146,7 @@
 ### [`assay/ledger.py`](assay/ledger.py)
 > *Append-only hash-chained ledger with optional HMAC signing.*
 
-**Size**: `222` lines (`9056` bytes)
+**Size**: `217` lines (`8904` bytes)
 
 **Classes:**
 - `class Verification` - *The outcome of walking the whole chain once.*
@@ -169,7 +169,7 @@
 ### [`assay/model.py`](assay/model.py)
 > *Event contract and canonical serialization for the evidence ledger.*
 
-**Size**: `248` lines (`10102` bytes)
+**Size**: `262` lines (`10752` bytes)
 
 **Classes:**
 - `class Event` - *One agent action, normalized and validated before hashing.*
@@ -198,7 +198,7 @@
 ### [`assay/policy.py`](assay/policy.py)
 > *Declarative agent policy evaluation and retrospective findings.*
 
-**Size**: `384` lines (`15257` bytes)
+**Size**: `397` lines (`15942` bytes)
 
 **Classes:**
 - `class Rule` - *One first-match policy rule; `*` is the only glob supported in `action`.*
@@ -229,7 +229,7 @@
 ### [`assay/report.py`](assay/report.py)
 > *Self-contained evidence packs in Markdown and JSON.*
 
-**Size**: `239` lines (`9105` bytes)
+**Size**: `243` lines (`9272` bytes)
 
 **Functions:**
 - `def _event(envelope)`
@@ -273,7 +273,7 @@
 ### [`tests/test_adapters.py`](tests/test_adapters.py)
 > *Agent framework adapter tests for MCP, OpenAI, LangGraph, and CrewAI.*
 
-**Size**: `318` lines (`11660` bytes)
+**Size**: `327` lines (`11939` bytes)
 
 **Classes:**
 - `class GenericAdapterTests`
@@ -284,6 +284,7 @@
   - Method `.test_unknown_outcome_is_rejected()`
 - `class McpAdapterTests`
   - Method `.test_tools_call_event()`
+  - Method `.test_mcp_target_is_preserved()`
   - Method `.test_non_tool_call_returns_none()`
   - Method `.test_error_result()`
   - Method `.test_unknown_outcome_is_rejected()`
@@ -350,7 +351,7 @@
 ### [`tests/test_cli.py`](tests/test_cli.py)
 > *End-to-end command-line tests through `main`, without spawning processes.*
 
-**Size**: `416` lines (`19302` bytes)
+**Size**: `427` lines (`19844` bytes)
 
 **Classes:**
 - `class CliTests`
@@ -358,6 +359,8 @@
   - Method `._run(*args)`
   - Method `._record(action, **extra)`
   - Method `.test_record_and_verify()`
+  - Method `.test_record_unix_seconds_ts()`
+  - Method `.test_version_matches_packaging()`
   - Method `.test_tampered_ledger_exits_one()`
   - Method `.test_record_attaches_policy_reference()`
   - Method `.test_review_exit_codes()`
@@ -405,7 +408,7 @@
 ### [`tests/test_ledger.py`](tests/test_ledger.py)
 > *Hash chain, tamper detection and signing tests.*
 
-**Size**: `163` lines (`6917` bytes)
+**Size**: `175` lines (`7553` bytes)
 
 **Classes:**
 - `class LedgerTests`
@@ -422,6 +425,7 @@
   - Method `.test_signed_chain_verifies_with_key()`
   - Method `.test_signed_chain_without_key_is_flagged_unchecked()`
   - Method `.test_wrong_key_is_detected()`
+  - Method `.test_blank_line_does_not_report_mixes()`
   - Method `.test_unsigned_chain_fails_when_a_key_is_supplied()`
   - Method `.test_mixed_signing_is_detected()`
   - Method `.test_append_refuses_a_corrupt_tail()`
@@ -437,7 +441,7 @@
 ### [`tests/test_model.py`](tests/test_model.py)
 > *Event contract and canonical JSON tests.*
 
-**Size**: `106` lines (`4113` bytes)
+**Size**: `128` lines (`5062` bytes)
 
 **Classes:**
 - `class CanonicalJsonTests`
@@ -461,13 +465,17 @@
   - Method `.test_unsupported_schema_is_refused()`
   - Method `.test_policy_reference_digest_shape()`
   - Method `.test_json_serializable_dict()`
+  - Method `.test_metadata_deep_copy_on_create()`
+  - Method `.test_to_dict_returns_independent_copy()`
+  - Method `.test_create_unknown_kwarg_raises_validation_error()`
+  - Method `.test_int_key_metadata_rejected()`
 
 ---
 
 ### [`tests/test_policy.py`](tests/test_policy.py)
 > *Policy parsing, matching and finding tests.*
 
-**Size**: `278` lines (`11808` bytes)
+**Size**: `299` lines (`12934` bytes)
 
 **Classes:**
 - `class PolicyEvaluationTests`
@@ -497,6 +505,9 @@
   - Method `.test_load_policy_pack_resolution()`
   - Method `.test_load_policy_bare_json_pack_name()`
   - Method `.test_unknown_pack_raises_validation_error()`
+  - Method `.test_pack_traversal_rejected()`
+  - Method `.test_null_metadata_value_requires_key_presence()`
+  - Method `.test_metadata_strict_bool_types()`
   - Method `.test_payments_pack_rules()`
   - Method `.test_production_change_pack_rules()`
   - Method `.test_customer_data_pack_rules()`
@@ -511,7 +522,7 @@
 ### [`tests/test_report.py`](tests/test_report.py)
 > *Evidence pack assembly and rendering tests.*
 
-**Size**: `108` lines (`4325` bytes)
+**Size**: `114` lines (`4578` bytes)
 
 **Classes:**
 - `class ReportTests`
@@ -522,6 +533,7 @@
   - Method `.test_fail_verdict_on_broken_chain()`
   - Method `.test_no_policy_is_allowed()`
   - Method `.test_markdown_escapes_table_cells()`
+  - Method `.test_cell_handles_none_and_truncation()`
   - Method `.test_write_json_and_markdown()`
   - Method `.test_unknown_format_is_refused()`
 

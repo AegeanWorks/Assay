@@ -88,6 +88,12 @@ class ReportTests(unittest.TestCase):
         pack = build_pack(str(self.path), ledger.inspect(), None)
         self.assertIn("a\\|b", render_markdown(pack))
 
+    def test_cell_handles_none_and_truncation(self):
+        from assay.report import _cell
+        self.assertEqual(_cell(None), "")
+        self.assertFalse(_cell("ab|cd", 4).endswith("\\"))
+        self.assertTrue(_cell("ab|cd", 4).endswith("…"))
+
     def test_write_json_and_markdown(self):
         state = self._state(["files.read"])
         pack = build_pack(str(self.path), state, _policy())

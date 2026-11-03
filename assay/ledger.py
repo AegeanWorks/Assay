@@ -118,17 +118,14 @@ class Ledger:
         for number, line in enumerate(lines, start=1):
             if not line.strip():
                 errors.append(f"line {number}: blank line")
-                all_mac = False
                 continue
             try:
                 value = json.loads(line)
             except json.JSONDecodeError as exc:
                 errors.append(f"line {number}: invalid JSON ({exc.msg})")
-                all_mac = False
                 continue
             if not isinstance(value, dict):
                 errors.append(f"line {number}: record is not an object")
-                all_mac = False
                 continue
             unknown = set(value) - ENVELOPE_FIELDS
             if unknown:
@@ -136,14 +133,12 @@ class Ledger:
             seq = value.get("seq")
             if isinstance(seq, bool) or not isinstance(seq, int):
                 errors.append(f"line {number}: seq is not an integer")
-                all_mac = False
                 continue
             if seq != len(records):
                 errors.append(f"line {number}: seq {seq} does not follow {len(records)}")
             prev = value.get("prev")
             if not isinstance(prev, str) or len(prev) != 64:
                 errors.append(f"line {number}: prev is not a 64-character digest")
-                all_mac = False
                 continue
             if prev != expected_prev:
                 errors.append(f"line {number}: prev does not match the previous record")
@@ -151,7 +146,6 @@ class Ledger:
                 event = Event.from_dict(value.get("event", {}))
             except ValidationError as exc:
                 errors.append(f"line {number}: event is invalid ({exc.message})")
-                all_mac = False
                 continue
             stored_hash = value.get("hash")
             computed = record_hash(seq, prev, event.to_dict())
@@ -167,6 +161,7 @@ class Ledger:
                     expected_mac = record_mac(self.key, seq, prev, event.to_dict())
                     if not hmac.compare_digest(mac, expected_mac):
                         errors.append(f"line {number}: HMAC mismatch")
+                        all_mac = False
             else:
                 all_mac = False
                 if self.key is not None:

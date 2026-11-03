@@ -113,3 +113,24 @@ contract, a dependency, a data format or the architecture; IDs are consecutive a
 ## License notice cleanup (2026-10-26)
 
 - The license-history notes were removed from README.md and COMMERCIAL.md: the project is offered only under the Aegean License 1.1 (AL-1.1), with commercial use under ACL-1.0.
+
+### ADR-009: Assay swarm Stage 3 verified bug fixes (no contract break)
+- **Date**: 2026-11-04
+- **Status**: Accepted
+- **Context**: Parallel analysis (8 modules) returned reproduced defects with file:line and
+  failing-first probes. All sampled findings were reproduced by the main session before fixing.
+- **Decision**: Land minimal bug fixes only, without changing hashes, digests, schemas or
+  exit-code contracts: (1) ledger `signed`/`key_checked` now reflect HMAC validity and blank /
+  corrupt lines no longer pollute the signing mix signal; (2) `Event` deep-copies metadata /
+  policy on ingress and egress, rejects non-string metadata keys, and raises `ValidationError`
+  for unknown `create()` fields; (3) `load_pack` rejects path traversal (`/`, `\`, `..`);
+  policy metadata matching requires key presence with strict bool typing; (4) MCP adapter
+  preserves `target`; (5) `record --ts` accepts Unix seconds per help text; (6) runtime
+  `VERSION` aligned to `0.2.0`; (7) Markdown `_cell` handles `None`, avoids dangling escapes,
+  and sanitizes head/digest/ledger-name sinks.
+- **Consequences**: JSON pack schema, record hashes, policy digests and exit codes are unchanged.
+  `wrong-key` verification now reports `signed:false,key_checked:false` (was `true/true`) and
+  blank-line chains stay `signed:true` with `ok:false`. Deferred (filed, not fixed): empty-ledger
+  and empty-anchor verdicts, demo `--out` re-run idempotency, seq-gap quarantine, anchor fork
+  detection, glob-language documentation, drift coverage for unpinned events, and launcher/CWD
+  parity — each needs a contract decision before implementation.

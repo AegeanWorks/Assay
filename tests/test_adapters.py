@@ -72,6 +72,15 @@ class McpAdapterTests(unittest.TestCase):
         self.assertEqual(event.metadata["query"], "SELECT 1")
         self.assertEqual(event.outcome, "success")
 
+    def test_mcp_target_is_preserved(self):
+        row = {
+            "method": "tools/call",
+            "params": {"name": "q", "arguments": {}},
+            "actor": "a",
+            "target": "db:prod",
+        }
+        self.assertEqual(mcp_event(row).target, "db:prod")
+
     def test_non_tool_call_returns_none(self):
         row = {"method": "notifications/initialized"}
         self.assertIsNone(mcp_event(row))

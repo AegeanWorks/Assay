@@ -233,6 +233,27 @@ class PolicyPackTests(unittest.TestCase):
             load_pack("nonexistent_domain")
         self.assertIn("available policy packs are", ctx.exception.why)
 
+    def test_pack_traversal_rejected(self):
+        for bad in ("../examples/policy", "payments/../payments", "/etc/passwd",
+                    "payments/../../pyproject"):
+            with self.assertRaises(ValidationError):
+                load_pack(bad)
+
+    def test_null_metadata_value_requires_key_presence(self):
+        policy = parse_policy({"schema": 1, "name": "t", "default": "allow",
+                               "rules": [{"id": "r", "action": "a", "effect": "deny",
+                                          "metadata": {"k": None}}]})
+        self.assertEqual(policy.evaluate(_event("a")).effect, "allow")
+        present = Event.create("agent:a", "a", ts="2026-10-23T09:00:00Z",
+                               metadata={"k": None})
+        self.assertEqual(policy.evaluate(present).effect, "deny")
+
+    def test_metadata_strict_bool_types(self):
+        policy = load_pack("customer_data")
+        numeric = Event.create("agent:a", "data.replicate", ts="2026-10-23T09:00:00Z",
+                               metadata={"cross_region": 1})
+        self.assertEqual(policy.evaluate(numeric).effect, "allow")
+
     def test_payments_pack_rules(self):
         policy = load_pack("payments")
         # Crypto denied

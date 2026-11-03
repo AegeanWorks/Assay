@@ -101,6 +101,28 @@ class EventTests(unittest.TestCase):
         event = Event.create("agent:a", "tool.call", metadata={"nested": {"x": [1, 2]}})
         self.assertEqual(json.loads(json.dumps(event.to_dict()))["metadata"]["nested"]["x"], [1, 2])
 
+    def test_metadata_deep_copy_on_create(self):
+        nested = {"n": {"x": 1}}
+        event = Event.create("agent:a", "tool.call", ts="2026-10-23T09:00:00Z",
+                             metadata=nested)
+        nested["n"]["x"] = 2
+        self.assertEqual(event.metadata, {"n": {"x": 1}})
+
+    def test_to_dict_returns_independent_copy(self):
+        event = Event.create("agent:a", "tool.call", ts="2026-10-23T09:00:00Z",
+                             metadata={"n": {"x": 1}})
+        value = event.to_dict()
+        value["metadata"]["n"]["x"] = 99
+        self.assertEqual(event.metadata, {"n": {"x": 1}})
+
+    def test_create_unknown_kwarg_raises_validation_error(self):
+        with self.assertRaises(ValidationError):
+            Event.create("agent:a", "tool.call", foo=1)
+
+    def test_int_key_metadata_rejected(self):
+        with self.assertRaises(ValidationError):
+            Event.create("agent:a", "tool.call", metadata={1: 2})
+
 
 if __name__ == "__main__":
     unittest.main()

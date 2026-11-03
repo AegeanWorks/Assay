@@ -124,6 +124,18 @@ class LedgerTests(unittest.TestCase):
         state = Ledger(self.path, b"x" * 32).inspect()
         self.assertFalse(state.verification.ok)
         self.assertTrue(any("HMAC mismatch" in error for error in state.verification.errors))
+        self.assertFalse(state.verification.signed)
+        self.assertFalse(state.verification.key_checked)
+
+    def test_blank_line_does_not_report_mixes(self):
+        self._write_events(1, b"k" * 32)
+        with self.path.open("a", encoding="utf-8") as handle:
+            handle.write("\n")
+        state = Ledger(self.path, b"k" * 32).inspect()
+        self.assertFalse(state.verification.ok)
+        self.assertTrue(any("blank line" in error for error in state.verification.errors))
+        self.assertFalse(any("mixes signed" in error for error in state.verification.errors))
+        self.assertTrue(state.verification.signed)
 
     def test_unsigned_chain_fails_when_a_key_is_supplied(self):
         self._write_events(1)

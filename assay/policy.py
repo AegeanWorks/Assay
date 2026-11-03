@@ -34,7 +34,13 @@ class Rule:
         if not fnmatch.fnmatchcase(event.action, self.action):
             return False, "", False
         for key, expected in self.metadata.items():
-            if event.metadata.get(key) != expected:
+            if key not in event.metadata:
+                return False, "", False
+            actual = event.metadata.get(key)
+            if isinstance(expected, bool) or isinstance(actual, bool):
+                if type(actual) is not type(expected) or actual != expected:
+                    return False, "", False
+            elif actual != expected:
                 return False, "", False
         if self.amount_over is None and self.amount_under is None:
             return True, f"matched rule '{self.id}'", False
@@ -307,6 +313,13 @@ def load_pack(name: str) -> Policy:
         pack_name = pack_name[5:]
     if pack_name.endswith(".json"):
         pack_name = pack_name[:-5]
+    if not pack_name or "/" in pack_name or "\\" in pack_name or ".." in pack_name:
+        available = list_packs()
+        raise ValidationError(
+            f"Unknown policy pack '{name}'.",
+            f"available policy packs are: {', '.join(available)}.",
+            f"select one of the available packs ({', '.join(available)}) or provide a path to a JSON file.",
+        )
     path = PACKS_DIR / f"{pack_name}.json"
     if not path.is_file():
         available = list_packs()

@@ -206,7 +206,16 @@ def _cmd_record(args: argparse.Namespace) -> int:
         "policy": _policy_reference(policy),
     }
     if args.ts:
-        values["ts"] = normalize_timestamp(args.ts)
+        raw_ts = args.ts.strip() if isinstance(args.ts, str) else args.ts
+        try:
+            ts_value: object = int(raw_ts) if "." not in str(raw_ts) else float(raw_ts)
+            # Only treat as epoch when the whole string is numeric; ISO dates fall through.
+            if str(raw_ts).lstrip("+-").replace(".", "", 1).isdigit():
+                values["ts"] = normalize_timestamp(ts_value)
+            else:
+                values["ts"] = normalize_timestamp(args.ts)
+        except (ValueError, TypeError):
+            values["ts"] = normalize_timestamp(args.ts)
     event = Event.create(args.actor, args.action, **values)
     envelope = Ledger(args.ledger, _key_from_env(args.hmac_key_env)).append(event)
     if args.json:

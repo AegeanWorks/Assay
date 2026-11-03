@@ -136,6 +136,7 @@ def mcp_event(row: Mapping[str, Any], actor_default: Optional[str] = None,
     return Event.create(
         actor, action,
         outcome=outcome,
+        target=_value(row, "target", "resource", "destination", default=""),
         metadata=metadata,
         policy=policy_ref,
         **({"ts": normalize_timestamp(ts)} if ts is not None else {}),

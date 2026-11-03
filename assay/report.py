@@ -91,8 +91,12 @@ def build_pack(ledger_name: str, state: LedgerState,
 
 
 def _cell(value: Any, limit: int = 80) -> str:
+    if value is None:
+        return ""
     text = str(value).replace("|", "\\|").replace("\r", " ").replace("\n", " ")
-    return text if len(text) <= limit else text[: limit - 1] + "…"
+    if len(text) <= limit:
+        return text
+    return text[: limit - 1].rstrip("\\") + "…"
 
 
 def _bullets(values: Sequence[str]) -> str:
@@ -121,7 +125,7 @@ def render_markdown(pack: Mapping[str, Any]) -> str:
         f"| Chain verified | {'yes' if ledger['verified'] else 'no'} |",
         f"| Signed | {'yes' if ledger['signed'] else 'no'} |",
         f"| Signature checked | {'yes' if ledger['key_checked'] else 'no'} |",
-        f"| Head | `{ledger['head']}` |",
+        f"| Head | `{_cell(ledger['head'], 120).replace('`', chr(39))}` |",
         "",
     ]
     if ledger["errors"]:
@@ -134,7 +138,7 @@ def render_markdown(pack: Mapping[str, Any]) -> str:
         "| Field | Value |",
         "|---|---|",
         f"| Name | {_cell(policy['name'] if policy else 'not supplied', 80)} |",
-        f"| Digest | {('`' + policy['digest'] + '`') if policy else 'not supplied'} |",
+        f"| Digest | {('`' + _cell(policy['digest'], 120).replace('`', chr(39)) + '`') if policy else 'not supplied'} |",
         f"| Default effect | {_cell(policy['default'] if policy else 'n/a', 40)} |",
         f"| Rules | {policy['rules'] if policy else 0} |",
         f"| Events citing a policy | {summary['policy_coverage']['recorded']} of {summary['events']} |",
@@ -218,7 +222,7 @@ def render_markdown(pack: Mapping[str, Any]) -> str:
         "record hash, and every record hash matches its canonical payload. Re-run:",
         "",
         "```bash",
-        f'assay verify --ledger "{ledger["name"]}"',
+        f'assay verify --ledger "{str(ledger["name"]).replace(chr(34), chr(39))}"',
         "```",
         "",
         f"_{pack['disclaimer']}_",

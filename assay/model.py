@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import json
 import math
 import re
@@ -127,8 +128,14 @@ def _metadata(value: Any) -> Dict[str, Any]:
             "a list or scalar cannot carry named evidence fields.",
             "pass metadata as an object such as {\"amount\": 2500}.",
         )
+    if any(not isinstance(key, str) for key in value):
+        raise ValidationError(
+            "Event metadata keys must be strings.",
+            "non-string keys collide after JSON encoding and break digests.",
+            "use string keys in metadata.",
+        )
     canonical_bytes(value)
-    return dict(value)
+    return copy.deepcopy(dict(value))
 
 
 def _policy_ref(value: Any) -> Optional[Dict[str, str]]:
@@ -194,7 +201,14 @@ class Event:
     @classmethod
     def create(cls, actor: str, action: str, **values: Any) -> "Event":
         """Build an event from CLI or adapter input with the documented defaults."""
-        return cls(actor=actor, action=action, **values)
+        try:
+            return cls(actor=actor, action=action, **values)
+        except TypeError as exc:
+            raise ValidationError(
+                f"Unknown event field(s): {exc}.",
+                "unknown fields would be excluded from the digest and silently unverifiable.",
+                "remove them, or record the data under 'metadata'.",
+            ) from exc
 
     @classmethod
     def from_dict(cls, value: Mapping[str, Any]) -> "Event":
@@ -241,8 +255,8 @@ class Event:
             "action": self.action,
             "outcome": self.outcome,
             "target": self.target,
-            "metadata": self.metadata,
+            "metadata": copy.deepcopy(self.metadata),
         }
         if self.policy is not None:
-            value["policy"] = self.policy
+            value["policy"] = copy.deepcopy(self.policy)
         return value

@@ -50,6 +50,17 @@ class CliTests(unittest.TestCase):
         self.assertTrue(payload["ok"])
         self.assertEqual(payload["records"], 1)
 
+    def test_record_unix_seconds_ts(self):
+        code, out, err = self._run("record", "--ledger", self.ledger, "--actor", "agent:a",
+                                   "--action", "files.read", "--ts", "1720000000")
+        self.assertEqual(code, 0)
+        record = json.loads(self.ledger.read_text(encoding="utf-8").splitlines()[0])
+        self.assertEqual(record["event"]["ts"], "2024-07-03T09:46:40Z")
+
+    def test_version_matches_packaging(self):
+        from assay.version import VERSION
+        self.assertEqual(VERSION, "0.2.0")
+
     def test_tampered_ledger_exits_one(self):
         self._record()
         lines = self.ledger.read_text(encoding="utf-8").splitlines()

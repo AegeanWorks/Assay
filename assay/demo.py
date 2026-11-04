@@ -79,7 +79,9 @@ def run_demo(directory: Path) -> DemoResult:
     for event in _events():
         ledger.append(replace(event, policy=reference))
     state = ledger.inspect()
-    findings = tuple(review_events(policy, state.records) + drift_findings(policy, state.records))
+    findings = tuple(sorted(review_events(policy, state.records)
+                            + drift_findings(policy, state.records),
+                            key=lambda finding: (finding.seq, finding.rule_id)))
     pack = build_pack(str(ledger_path), state, policy)
     markdown_path = directory / "evidence.md"
     json_path = directory / "evidence.json"

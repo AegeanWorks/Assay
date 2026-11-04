@@ -153,7 +153,7 @@ def render_markdown(pack: Mapping[str, Any]) -> str:
         f"| Default effect | {_cell(policy['default'] if policy else 'n/a', 40)} |",
         f"| Rules | {policy['rules'] if policy else 0} |",
         f"| Events citing a policy | {summary['policy_coverage']['recorded']} of {summary['events']} |",
-        f"| Events matching this policy | {summary['policy_coverage']['matching']} |",
+        f"| Events matching this policy | {summary['policy_coverage']['matching'] if policy else 'n/a'} |",
         "",
     ]
     if policy:
@@ -229,8 +229,10 @@ def render_markdown(pack: Mapping[str, Any]) -> str:
         "",
         "## Verification",
         "",
-        "The chain is valid when every `seq` is contiguous, every `prev` equals the previous "
-        "record hash, and every record hash matches its canonical payload. Re-run:",
+        "The chain is valid when every line parses as a record with a known envelope, "
+        "every `seq` is contiguous, every `prev` equals the previous record hash, "
+        "every event validates, and every record hash (and `mac` when a key is given) "
+        "matches its canonical payload. Re-run:",
         "",
         "```bash",
         f'assay verify --ledger "{str(ledger["name"]).replace(chr(34), chr(39))}"',

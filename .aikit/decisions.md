@@ -204,3 +204,15 @@ contract, a dependency, a data format or the architecture; IDs are consecutive a
 - **Consequences**: Rows that relied on `role`-only attribution or falsy-error forcing now
   resolve differently (missing-actor `ValidationError`, or declared-outcome verdict).
   No schema, digest, or exit-code change; no new accepted outcome.
+
+### ADR-015: Demo matches review order; review surface states its limits
+- **Date**: 2026-11-04
+- **Status**: Accepted
+- **Context**: `run_demo` concatenated review then drift findings while `assay review`
+  sorts by `(seq, rule_id)`; the no-policy Markdown row claimed `0` matches against a policy
+  that was never supplied; the band error message miscounted the outside-band semantics.
+- **Decision**: Sort demo findings by `(seq, rule_id)`; render the no-policy matching row
+  as `n/a`; reword the band `Why` around outside-band matching; state the full chain gate
+  (envelope, seq, prev, event, hash, mac) in the Verification prose.
+- **Consequences**: No JSON, digest, or exit-code change. Demo output now matches review
+  order by construction.

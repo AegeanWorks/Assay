@@ -162,6 +162,14 @@ class PolicyValidationTests(unittest.TestCase):
                 with self.assertRaises(ValidationError):
                     parse_policy(document)
 
+    def test_inverted_band_message_names_outside_band(self):
+        with self.assertRaises(ValidationError) as ctx:
+            parse_policy(_document(rules=[
+                {"id": "x", "action": "a", "effect": "deny",
+                 "amount_under": 10, "amount_over": 5},
+            ]))
+        self.assertIn("outside-band", ctx.exception.why)
+
     def test_load_policy(self):
         root = Path(tempfile.mkdtemp(prefix="assay-policy-"))
         self.addCleanup(shutil.rmtree, root, True)

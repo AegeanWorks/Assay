@@ -9,8 +9,8 @@
 - **Total Python Modules**: `23`
 - **Total Classes**: `37`
 - **Total Top-Level Functions**: `79`
-- **Total Class Methods**: `212`
-- **Total Source Lines**: `4442`
+- **Total Class Methods**: `214`
+- **Total Source Lines**: `4464`
 
 ---
 
@@ -117,7 +117,7 @@
 ### [`assay/demo.py`](assay/demo.py)
 > *A deterministic treasury-agent scenario that shows the product in one command.*
 
-**Size**: `89` lines (`3615` bytes)
+**Size**: `91` lines (`3731` bytes)
 
 **Classes:**
 - `class DemoResult` - *Everything the demo wrote, so tests and the CLI share one contract.*
@@ -197,7 +197,7 @@
 ### [`assay/policy.py`](assay/policy.py)
 > *Declarative agent policy evaluation and retrospective findings.*
 
-**Size**: `402` lines (`16214` bytes)
+**Size**: `402` lines (`16220` bytes)
 
 **Classes:**
 - `class Rule` - *One first-match policy rule; actions match with fnmatch (`*`, `?`, `[...]`).*
@@ -228,7 +228,7 @@
 ### [`assay/report.py`](assay/report.py)
 > *Self-contained evidence packs in Markdown and JSON.*
 
-**Size**: `256` lines (`9631` bytes)
+**Size**: `258` lines (`9782` bytes)
 
 **Functions:**
 - `def _event(envelope)`
@@ -359,7 +359,7 @@
 ### [`tests/test_cli.py`](tests/test_cli.py)
 > *End-to-end command-line tests through `main`, without spawning processes.*
 
-**Size**: `469` lines (`21612` bytes)
+**Size**: `477` lines (`21982` bytes)
 
 **Classes:**
 - `class CliTests`
@@ -401,6 +401,7 @@
   - Method `.test_record_bare_at_metadata()`
   - Method `.test_demo_out_is_file()`
   - Method `.test_demo_rerun_same_dir_is_usage_error()`
+  - Method `.test_demo_findings_match_review_order()`
   - Method `.test_report_out_is_directory()`
   - Method `.test_policy_show_unknown_suggests_packs()`
 
@@ -490,7 +491,7 @@
 ### [`tests/test_policy.py`](tests/test_policy.py)
 > *Policy parsing, matching and finding tests.*
 
-**Size**: `308` lines (`13345` bytes)
+**Size**: `316` lines (`13696` bytes)
 
 **Classes:**
 - `class PolicyEvaluationTests`
@@ -509,6 +510,7 @@
   - Method `.test_rule_without_amount_condition_matches()`
 - `class PolicyValidationTests`
   - Method `.test_invalid_documents_are_refused()`
+  - Method `.test_inverted_band_message_names_outside_band()`
   - Method `.test_load_policy()`
 - `class PolicyReviewTests`
   - Method `._records()`
@@ -539,7 +541,7 @@
 ### [`tests/test_report.py`](tests/test_report.py)
 > *Evidence pack assembly and rendering tests.*
 
-**Size**: `125` lines (`5148` bytes)
+**Size**: `127` lines (`5249` bytes)
 
 **Classes:**
 - `class ReportTests`

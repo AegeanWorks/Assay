@@ -216,7 +216,7 @@ def _parse_rule(value: Any, position: int) -> Rule:
     if amount_over is not None and amount_under is not None and amount_under >= amount_over:
         raise ValidationError(
             f"Policy rule '{rule_id}' has amount_under not below amount_over.",
-            "the band would be empty or inverted, so no amount could fall outside it.",
+            "a band needs amount_under below amount_over so outside-band amounts can match.",
             "set amount_under below amount_over, or remove one of them.",
         )
     metadata = value.get("metadata", {})

@@ -452,6 +452,14 @@ class CliTests(unittest.TestCase):
         self.assertEqual(code, 2)
         self.assertIn("already holds a ledger", err)
 
+    def test_demo_findings_match_review_order(self):
+        demo_dir = self.root / "demo-order"
+        code, out, _ = self._run("demo", "--out", demo_dir, "--json")
+        self.assertEqual(code, 0)
+        payload = json.loads(out)
+        keys = [(finding["seq"], finding["rule_id"]) for finding in payload["findings"]]
+        self.assertEqual(keys, sorted(keys))
+
     def test_report_out_is_directory(self):
         self._record("files.read")
         code, _, err = self._run("report", "--ledger", self.ledger, "--out", self.root)

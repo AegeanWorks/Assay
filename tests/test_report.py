@@ -79,7 +79,9 @@ class ReportTests(unittest.TestCase):
         state = self._state(["files.read"])
         pack = build_pack(str(self.path), state, None)
         self.assertIsNone(pack["policy"])
-        self.assertIn("not supplied", render_markdown(pack))
+        markdown = render_markdown(pack)
+        self.assertIn("not supplied", markdown)
+        self.assertIn("| Events matching this policy | n/a |", markdown)
 
     def test_markdown_escapes_table_cells(self):
         ledger = Ledger(self.path)

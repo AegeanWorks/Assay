@@ -177,3 +177,16 @@ contract, a dependency, a data format or the architecture; IDs are consecutive a
   the implementation.
 - **Consequences**: No hash, digest, or schema change. Operators get a loud empty-evidence
   signal instead of a vacuously passing pack; demo re-runs are explicit, not silent doubles.
+
+### ADR-013: Adapter fidelity without input expansion
+- **Date**: 2026-11-04
+- **Status**: Accepted
+- **Context**: Three reproduced data-loss/inconsistency defects: LangGraph flattened
+  `data.input` over `data.output` on key collision; CrewAI stored tool results under `result`
+  while LangGraph used `output`; LangGraph left JSON-array `content` as a verbatim string.
+- **Decision**: Preserve both colliding values (`input.output` keeps the input side);
+  CrewAI stores `output` alongside `result` (existing `result` assertions unchanged);
+  array `content` parses through the shared `_as_dict` contract. No new accepted outcomes,
+  no new required fields, no exit-code change.
+- **Consequences**: Additive only. Multi-framework evidence is comparable without producer
+  rewrites; no existing passing input is rejected.

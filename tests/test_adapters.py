@@ -259,6 +259,17 @@ class LangGraphAdapterTests(unittest.TestCase):
         event = langgraph_event({"actor": "agent:a", "name": "tool1", "outcome": " ERROR "})
         self.assertEqual(event.outcome, "error")
 
+    def test_langgraph_input_output_collision(self):
+        event = langgraph_event({"actor": "agent:a", "name": "t",
+                                 "data": {"input": {"output": "from-input"},
+                                          "output": "from-output"}})
+        self.assertEqual(event.metadata["output"], "from-output")
+        self.assertIn("from-input", str(event.metadata))
+
+    def test_langgraph_content_json_array(self):
+        event = langgraph_event({"actor": "agent:a", "name": "t", "content": "[1, 2]"})
+        self.assertEqual(event.metadata["content"], {"content": [1, 2]})
+
 
 class CrewAiAdapterTests(unittest.TestCase):
     def test_agent_tool_execution(self):
@@ -277,6 +288,11 @@ class CrewAiAdapterTests(unittest.TestCase):
         self.assertEqual(event.metadata["result"], "225.50 USD")
         self.assertEqual(event.metadata["thought"], "Need latest closing price")
         self.assertEqual(event.outcome, "success")
+
+    def test_crewai_output_key_not_renamed(self):
+        event = crewai_event({"agent": "agent:a", "tool": "t", "output": "hello"})
+        self.assertIn("output", event.metadata)
+        self.assertEqual(event.metadata["output"], "hello")
 
     def test_action_input_format(self):
         row = {

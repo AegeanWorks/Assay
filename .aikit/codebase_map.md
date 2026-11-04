@@ -9,8 +9,8 @@
 - **Total Python Modules**: `23`
 - **Total Classes**: `37`
 - **Total Top-Level Functions**: `79`
-- **Total Class Methods**: `205`
-- **Total Source Lines**: `4393`
+- **Total Class Methods**: `208`
+- **Total Source Lines**: `4421`
 
 ---
 
@@ -33,7 +33,7 @@
 ### [`assay/adapters.py`](assay/adapters.py)
 > *Adapters that transform event telemetry from major agent frameworks into Assay events.*
 
-**Size**: `381` lines (`16589` bytes)
+**Size**: `393` lines (`17030` bytes)
 
 **Functions:**
 - `def _value(row, *names, default)`
@@ -273,7 +273,7 @@
 ### [`tests/test_adapters.py`](tests/test_adapters.py)
 > *Agent framework adapter tests for MCP, OpenAI, LangGraph, and CrewAI.*
 
-**Size**: `327` lines (`11939` bytes)
+**Size**: `343` lines (`12781` bytes)
 
 **Classes:**
 - `class GenericAdapterTests`
@@ -304,8 +304,11 @@
   - Method `.test_error_event()`
   - Method `.test_unknown_outcome_is_rejected()`
   - Method `.test_outcome_is_normalized()`
+  - Method `.test_langgraph_input_output_collision()`
+  - Method `.test_langgraph_content_json_array()`
 - `class CrewAiAdapterTests`
   - Method `.test_agent_tool_execution()`
+  - Method `.test_crewai_output_key_not_renamed()`
   - Method `.test_action_input_format()`
   - Method `.test_unknown_outcome_is_rejected()`
   - Method `.test_outcome_is_normalized()`

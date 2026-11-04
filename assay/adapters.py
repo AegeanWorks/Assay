@@ -223,7 +223,11 @@ def langgraph_event(row: Mapping[str, Any], actor_default: Optional[str] = None,
     inp = data.get("input") if "input" in data else row.get("args") or row.get("input")
     if inp is not None:
         if isinstance(inp, Mapping):
-            metadata.update(inp)
+            for key, val in inp.items():
+                if key == "output" and ("output" in data or "output" in row):
+                    metadata["input.output"] = val
+                else:
+                    metadata[key] = val
         else:
             metadata["input"] = inp
     outp = data.get("output") if "output" in data else row.get("output")
@@ -231,7 +235,14 @@ def langgraph_event(row: Mapping[str, Any], actor_default: Optional[str] = None,
         metadata["output"] = outp
     content = row.get("content")
     if content is not None:
-        metadata["content"] = _as_dict(content) if isinstance(content, str) and content.strip().startswith("{") else content
+        if isinstance(content, str):
+            stripped = content.strip()
+            if stripped.startswith("{") or stripped.startswith("["):
+                metadata["content"] = _as_dict(content)
+            else:
+                metadata["content"] = content
+        else:
+            metadata["content"] = content
     tool_call_id = row.get("tool_call_id") or row.get("id")
     if tool_call_id and isinstance(tool_call_id, str):
         metadata["tool_call_id"] = tool_call_id
@@ -293,6 +304,7 @@ def crewai_event(row: Mapping[str, Any], actor_default: Optional[str] = None,
     result = row.get("result") if "result" in row else row.get("output")
     if result is not None:
         metadata["result"] = result
+        metadata.setdefault("output", result)
     if "thought" in row and isinstance(row["thought"], str):
         metadata["thought"] = row["thought"]
     if "error" in row:

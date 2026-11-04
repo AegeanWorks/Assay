@@ -9,8 +9,8 @@
 - **Total Python Modules**: `23`
 - **Total Classes**: `37`
 - **Total Top-Level Functions**: `79`
-- **Total Class Methods**: `208`
-- **Total Source Lines**: `4421`
+- **Total Class Methods**: `212`
+- **Total Source Lines**: `4442`
 
 ---
 
@@ -33,7 +33,7 @@
 ### [`assay/adapters.py`](assay/adapters.py)
 > *Adapters that transform event telemetry from major agent frameworks into Assay events.*
 
-**Size**: `393` lines (`17030` bytes)
+**Size**: `395` lines (`17040` bytes)
 
 **Functions:**
 - `def _value(row, *names, default)`
@@ -273,7 +273,7 @@
 ### [`tests/test_adapters.py`](tests/test_adapters.py)
 > *Agent framework adapter tests for MCP, OpenAI, LangGraph, and CrewAI.*
 
-**Size**: `343` lines (`12781` bytes)
+**Size**: `362` lines (`13707` bytes)
 
 **Classes:**
 - `class GenericAdapterTests`
@@ -297,6 +297,8 @@
   - Method `.test_error_status()`
   - Method `.test_unknown_outcome_is_rejected()`
   - Method `.test_outcome_is_normalized()`
+  - Method `.test_openai_role_is_not_actor()`
+  - Method `.test_openai_falsy_error_does_not_force_error()`
 - `class LangGraphAdapterTests`
   - Method `.test_on_tool_end_event()`
   - Method `.test_tool_message_format()`
@@ -304,6 +306,7 @@
   - Method `.test_error_event()`
   - Method `.test_unknown_outcome_is_rejected()`
   - Method `.test_outcome_is_normalized()`
+  - Method `.test_langgraph_falsy_error_does_not_force_error()`
   - Method `.test_langgraph_input_output_collision()`
   - Method `.test_langgraph_content_json_array()`
 - `class CrewAiAdapterTests`
@@ -312,6 +315,7 @@
   - Method `.test_action_input_format()`
   - Method `.test_unknown_outcome_is_rejected()`
   - Method `.test_outcome_is_normalized()`
+  - Method `.test_crewai_falsy_error_does_not_force_error()`
 - `class AdapterDispatcherTests`
   - Method `.test_known_adapters()`
   - Method `.test_unknown_format_raises()`

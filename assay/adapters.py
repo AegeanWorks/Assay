@@ -155,7 +155,7 @@ def openai_event(row: Mapping[str, Any], actor_default: Optional[str] = None,
             "the tool name is the audited action.",
             "ensure the record has function.name, name, or action.",
         )
-    actor = _value(row, "actor", "agent", "role", default=actor_default)
+    actor = _value(row, "actor", "agent", default=actor_default)
     if not isinstance(actor, str) or not actor.strip():
         raise ValidationError(
             "An OpenAI record has no actor.",
@@ -169,8 +169,9 @@ def openai_event(row: Mapping[str, Any], actor_default: Optional[str] = None,
         metadata["tool_call_id"] = tool_call_id
     if "output" in row and "output" not in metadata:
         metadata["output"] = row["output"]
-    if "error" in row:
-        metadata["error"] = row["error"]
+    err = row.get("error")
+    if err:
+        metadata["error"] = err
         outcome = "error"
     elif row.get("status") in ("failed", "error"):
         outcome = "error"
@@ -246,7 +247,7 @@ def langgraph_event(row: Mapping[str, Any], actor_default: Optional[str] = None,
     tool_call_id = row.get("tool_call_id") or row.get("id")
     if tool_call_id and isinstance(tool_call_id, str):
         metadata["tool_call_id"] = tool_call_id
-    if "error" in row or "error" in data:
+    if row.get("error") or data.get("error"):
         outcome = "error"
         err_val = row.get("error") or data.get("error")
         if err_val:
@@ -307,9 +308,10 @@ def crewai_event(row: Mapping[str, Any], actor_default: Optional[str] = None,
         metadata.setdefault("output", result)
     if "thought" in row and isinstance(row["thought"], str):
         metadata["thought"] = row["thought"]
-    if "error" in row:
+    err = row.get("error")
+    if err:
         outcome = "error"
-        metadata["error"] = row["error"]
+        metadata["error"] = err
     else:
         raw_outcome = _value(row, "outcome", "status", default="success")
         if not isinstance(raw_outcome, str):

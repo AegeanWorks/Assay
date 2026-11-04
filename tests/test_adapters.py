@@ -195,6 +195,15 @@ class OpenAiAdapterTests(unittest.TestCase):
         event = openai_event({"actor": "agent:a", "name": "tool1", "outcome": " ERROR "})
         self.assertEqual(event.outcome, "error")
 
+    def test_openai_role_is_not_actor(self):
+        with self.assertRaises(ValidationError):
+            openai_event({"function": {"name": "x", "arguments": "{}"}, "role": "assistant"})
+
+    def test_openai_falsy_error_does_not_force_error(self):
+        event = openai_event({"actor": "agent:a", "name": "t", "error": None})
+        self.assertEqual(event.outcome, "success")
+        self.assertNotIn("error", event.metadata)
+
 
 class LangGraphAdapterTests(unittest.TestCase):
     def test_on_tool_end_event(self):
@@ -259,6 +268,11 @@ class LangGraphAdapterTests(unittest.TestCase):
         event = langgraph_event({"actor": "agent:a", "name": "tool1", "outcome": " ERROR "})
         self.assertEqual(event.outcome, "error")
 
+    def test_langgraph_falsy_error_does_not_force_error(self):
+        event = langgraph_event({"actor": "agent:a", "name": "t", "error": "", "data": {}})
+        self.assertEqual(event.outcome, "success")
+        self.assertNotIn("error", event.metadata)
+
     def test_langgraph_input_output_collision(self):
         event = langgraph_event({"actor": "agent:a", "name": "t",
                                  "data": {"input": {"output": "from-input"},
@@ -314,6 +328,11 @@ class CrewAiAdapterTests(unittest.TestCase):
     def test_outcome_is_normalized(self):
         event = crewai_event({"agent": "agent:a", "tool": "t1", "outcome": " ERROR "})
         self.assertEqual(event.outcome, "error")
+
+    def test_crewai_falsy_error_does_not_force_error(self):
+        event = crewai_event({"agent": "agent:a", "tool": "t", "error": ""})
+        self.assertEqual(event.outcome, "success")
+        self.assertNotIn("error", event.metadata)
 
 
 class AdapterDispatcherTests(unittest.TestCase):

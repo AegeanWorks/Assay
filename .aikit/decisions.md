@@ -190,3 +190,17 @@ contract, a dependency, a data format or the architecture; IDs are consecutive a
   no new required fields, no exit-code change.
 - **Consequences**: Additive only. Multi-framework evidence is comparable without producer
   rewrites; no existing passing input is rejected.
+
+### ADR-014: Error presence requires a truthy value; OpenAI role is not a principal
+- **Date**: 2026-11-04
+- **Status**: Accepted
+- **Context**: Reproduced falseattribution bugs: `role: assistant` became
+  `actor: assistant`, and `error: null`/`""` forced `outcome: error` with the falsy value
+  stored as evidence.
+- **Decision**: Drop `role` from the OpenAI actor alias table (pass `--actor` or include
+  `actor`/`agent`); only truthy `error` values force `outcome: error` across OpenAI,
+  CrewAI, and LangGraph, otherwise the declared `outcome`/`status` applies and no empty
+  error is stored.
+- **Consequences**: Rows that relied on `role`-only attribution or falsy-error forcing now
+  resolve differently (missing-actor `ValidationError`, or declared-outcome verdict).
+  No schema, digest, or exit-code change; no new accepted outcome.

@@ -305,7 +305,10 @@ def crewai_event(row: Mapping[str, Any], actor_default: Optional[str] = None,
     result = row.get("result") if "result" in row else row.get("output")
     if result is not None:
         metadata["result"] = result
-        metadata.setdefault("output", result)
+        if "output" in row and row["output"] is not None:
+            metadata["output"] = row["output"]
+        else:
+            metadata.setdefault("output", result)
     if "thought" in row and isinstance(row["thought"], str):
         metadata["thought"] = row["thought"]
     err = row.get("error")

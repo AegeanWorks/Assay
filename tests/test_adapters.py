@@ -308,6 +308,12 @@ class CrewAiAdapterTests(unittest.TestCase):
         self.assertIn("output", event.metadata)
         self.assertEqual(event.metadata["output"], "hello")
 
+    def test_crewai_explicit_output_is_preserved(self):
+        event = crewai_event({"agent": "agent:a", "tool": "t",
+                              "result": "R", "output": "O"})
+        self.assertEqual(event.metadata["result"], "R")
+        self.assertEqual(event.metadata["output"], "O")
+
     def test_action_input_format(self):
         row = {
             "agent_role": "Customer Support Lead",

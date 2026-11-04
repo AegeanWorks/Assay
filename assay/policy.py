@@ -20,7 +20,7 @@ _POLICY_FIELDS = frozenset({"schema", "name", "default", "rules"})
 
 @dataclass(frozen=True)
 class Rule:
-    """One first-match policy rule; `*` is the only glob supported in `action`."""
+    """One first-match policy rule; actions match with fnmatch (`*`, `?`, `[...]`)."""
 
     id: str
     action: str

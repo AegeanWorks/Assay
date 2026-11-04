@@ -7,6 +7,7 @@ from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Tuple
 
+from .errors import ValidationError
 from .ledger import Ledger, LedgerState
 from .model import Event
 from .policy import Finding, Policy, drift_findings, parse_policy, review_events
@@ -58,10 +59,21 @@ def _events() -> Tuple[Event, ...]:
 def run_demo(directory: Path) -> DemoResult:
     """Create a policy, a signed-off chain, findings and both evidence packs."""
     directory.mkdir(parents=True, exist_ok=True)
+    ledger_path = directory / "ledger.jsonl"
+    if ledger_path.is_file():
+        try:
+            existing = ledger_path.read_text(encoding="utf-8-sig")
+        except (OSError, UnicodeError):
+            existing = ""
+        if existing.strip():
+            raise ValidationError(
+                f"The demo --out '{directory}' already holds a ledger.",
+                "re-running into the same folder would double the evidence.",
+                "pass an empty directory or remove ledger.jsonl first.",
+            )
     policy = parse_policy(DEMO_POLICY)
     policy_path = directory / "policy.json"
     write_text_atomic(policy_path, json.dumps(DEMO_POLICY, indent=2) + "\n")
-    ledger_path = directory / "ledger.jsonl"
     ledger = Ledger(ledger_path)
     reference = policy.reference()
     for event in _events():

@@ -171,6 +171,8 @@ class Ledger:
         signed = bool(records) and all_mac
         if any_mac and not all_mac:
             errors.append("the ledger mixes signed and unsigned records")
+        if not records and not errors:
+            errors.append("the ledger is empty")
         head = records[-1].get("hash") if records else ZERO_HASH
         verification = Verification(
             ok=not errors,

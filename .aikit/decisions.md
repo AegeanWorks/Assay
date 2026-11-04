@@ -163,3 +163,17 @@ contract, a dependency, a data format or the architecture; IDs are consecutive a
   them.
 - **Consequences**: No code or packaging change. Follow-up stays filed: vendor or link the
   binding ACL/CLA texts so offline evaluators can read the commercial terms.
+
+### ADR-012: Empty evidence fails verification; demo refuses to double its ledger
+- **Date**: 2026-11-04
+- **Status**: Accepted
+- **Context**: An empty ledger verified `ok:true` and an empty anchor journal verified
+  `ok:true`, so total truncation looked healthy; re-running `assay demo --out DIR` appended a
+  second 5-record chain (10 records, doubled findings) with exit 0.
+- **Decision**: Empty ledgers and empty anchor journals verify `ok:false` with explicit
+  `empty` findings (verify/review/report exit 1; missing files still exit 2). `run_demo`
+  refuses a directory whose `ledger.jsonl` already holds records (`ValidationError`, exit 2).
+  Action globs are documented as `fnmatch` (`*`, `?`, `[...]`) in code and README, matching
+  the implementation.
+- **Consequences**: No hash, digest, or schema change. Operators get a loud empty-evidence
+  signal instead of a vacuously passing pack; demo re-runs are explicit, not silent doubles.

@@ -203,7 +203,7 @@ Policies are JSON, evaluated in file order with first-match semantics.
 }
 ```
 
-- `action` is an exact name or a glob; `*` matches any run of characters.
+- `action` is an exact name or an `fnmatch` glob (`*`, `?`, `[...]`); `*` matches any run of characters.
 - `amount_over` and `amount_under` are exclusive thresholds. Together they define an allowed
   band: a rule with both applies outside the band.
 - A rule with a threshold and a missing, non-numeric or non-finite `metadata.amount` becomes a

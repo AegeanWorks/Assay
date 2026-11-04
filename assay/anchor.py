@@ -288,6 +288,8 @@ class AnchorJournal:
             records.append(anchor.to_dict())
             expected_prev = anchor.hash
             last_seq = max(last_seq, anchor.seq)
+        if not records and not errors:
+            errors.append("the anchor journal is empty")
         head = records[-1]["hash"] if records else ZERO_HASH
         verification = AnchorVerification(
             ok=not errors,

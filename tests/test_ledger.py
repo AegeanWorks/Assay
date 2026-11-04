@@ -170,6 +170,12 @@ class LedgerTests(unittest.TestCase):
         with self.assertRaises(LedgerError):
             Ledger(self.path).inspect()
 
+    def test_empty_ledger_verdict(self):
+        self.path.write_text("", encoding="utf-8")
+        state = Ledger(self.path).inspect()
+        self.assertFalse(state.verification.ok)
+        self.assertIn("empty", " ".join(state.verification.errors))
+
 
 if __name__ == "__main__":
     unittest.main()

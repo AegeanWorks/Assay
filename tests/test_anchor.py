@@ -197,6 +197,12 @@ class AnchorJournalTests(unittest.TestCase):
         with self.assertRaises(AnchorError):
             self.journal.inspect()
 
+    def test_empty_journal_verdict(self):
+        self.path.write_text("", encoding="utf-8")
+        state = self.journal.inspect()
+        self.assertFalse(state.verification.ok)
+        self.assertIn("empty", " ".join(state.verification.errors))
+
 
 if __name__ == "__main__":
     unittest.main()

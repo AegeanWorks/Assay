@@ -331,18 +331,18 @@ def _cmd_anchor(args: argparse.Namespace) -> int:
         )
     key = _key_from_env(args.hmac_key_env)
     state = _load_state(args.ledger, key)
-    if not state.verification.ok:
-        print(f"Ledger FAILED: {len(state.verification.errors)} problem(s) "
-              f"in {state.verification.records} parsed record(s)")
-        for error in state.verification.errors:
-            print(f"  - {error}")
-        return 1
     if not state.records:
         raise ValidationError(
             "The ledger has no records to anchor.",
             "an anchor commits to an existing ledger head.",
             "record at least one event before anchoring.",
         )
+    if not state.verification.ok:
+        print(f"Ledger FAILED: {len(state.verification.errors)} problem(s) "
+              f"in {state.verification.records} parsed record(s)")
+        for error in state.verification.errors:
+            print(f"  - {error}")
+        return 1
     ledger_label = args.ledger_label or args.ledger.name
     latest = state.records[-1]
     journal = AnchorJournal(args.anchors)

@@ -45,6 +45,12 @@ class PolicyEvaluationTests(unittest.TestCase):
         self.assertEqual(policy.evaluate(_event("shell.exec")).effect, "deny")
         self.assertEqual(policy.evaluate(_event("files.read")).effect, "allow")
 
+    def test_glob_uses_fnmatch(self):
+        policy = parse_policy(_document(rules=[
+            {"id": "q", "action": "payments.?ransfer", "effect": "deny"},
+        ]))
+        self.assertEqual(policy.evaluate(_event("payments.Xransfer")).effect, "deny")
+
     def test_require_approval(self):
         policy = parse_policy(_document(rules=[
             {"id": "approve", "action": "payments.*", "effect": "require_approval"},

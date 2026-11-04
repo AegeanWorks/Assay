@@ -444,6 +444,14 @@ class CliTests(unittest.TestCase):
         self.assertEqual(code, 2)
         self.assertIn("--out", err)
 
+    def test_demo_rerun_same_dir_is_usage_error(self):
+        demo_dir = self.root / "demo1"
+        code, _, _ = self._run("demo", "--out", demo_dir)
+        self.assertEqual(code, 0)
+        code, _, err = self._run("demo", "--out", demo_dir)
+        self.assertEqual(code, 2)
+        self.assertIn("already holds a ledger", err)
+
     def test_report_out_is_directory(self):
         self._record("files.read")
         code, _, err = self._run("report", "--ledger", self.ledger, "--out", self.root)

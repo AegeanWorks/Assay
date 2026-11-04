@@ -9,8 +9,8 @@
 - **Total Python Modules**: `23`
 - **Total Classes**: `37`
 - **Total Top-Level Functions**: `79`
-- **Total Class Methods**: `201`
-- **Total Source Lines**: `4351`
+- **Total Class Methods**: `205`
+- **Total Source Lines**: `4393`
 
 ---
 
@@ -51,7 +51,7 @@
 ### [`assay/anchor.py`](assay/anchor.py)
 > *Append-only anchor journal that commits to a ledger head.*
 
-**Size**: `336` lines (`13024` bytes)
+**Size**: `338` lines (`13120` bytes)
 
 **Classes:**
 - `class Anchor` - *One immutable commitment to a ledger seq and hash.*
@@ -117,7 +117,7 @@
 ### [`assay/demo.py`](assay/demo.py)
 > *A deterministic treasury-agent scenario that shows the product in one command.*
 
-**Size**: `77` lines (`3101` bytes)
+**Size**: `89` lines (`3615` bytes)
 
 **Classes:**
 - `class DemoResult` - *Everything the demo wrote, so tests and the CLI share one contract.*
@@ -145,7 +145,7 @@
 ### [`assay/ledger.py`](assay/ledger.py)
 > *Append-only hash-chained ledger with optional HMAC signing.*
 
-**Size**: `217` lines (`8904` bytes)
+**Size**: `219` lines (`8992` bytes)
 
 **Classes:**
 - `class Verification` - *The outcome of walking the whole chain once.*
@@ -197,10 +197,10 @@
 ### [`assay/policy.py`](assay/policy.py)
 > *Declarative agent policy evaluation and retrospective findings.*
 
-**Size**: `402` lines (`16210` bytes)
+**Size**: `402` lines (`16214` bytes)
 
 **Classes:**
-- `class Rule` - *One first-match policy rule; `*` is the only glob supported in `action`.*
+- `class Rule` - *One first-match policy rule; actions match with fnmatch (`*`, `?`, `[...]`).*
   - Method `.match(event)` - *Whether the rule applies, a reviewable reason, and whether the amount is unverifiable.*
   - Method `.to_dict()`
 - `class Decision` - *The effective rule and reason for one event.*
@@ -319,7 +319,7 @@
 ### [`tests/test_anchor.py`](tests/test_anchor.py)
 > *Anchor record, journal chain and tamper detection tests.*
 
-**Size**: `202` lines (`7787` bytes)
+**Size**: `208` lines (`8036` bytes)
 
 **Classes:**
 - `class AnchorPayloadTests`
@@ -342,6 +342,7 @@
   - Method `.test_unsupported_schema_is_refused()`
   - Method `.test_corrupt_tail_refuses_append()`
   - Method `.test_missing_journal_raises()`
+  - Method `.test_empty_journal_verdict()`
 
 **Functions:**
 - `def _append(journal, seq, head, ledger, key_id, created_at)`
@@ -351,7 +352,7 @@
 ### [`tests/test_cli.py`](tests/test_cli.py)
 > *End-to-end command-line tests through `main`, without spawning processes.*
 
-**Size**: `461` lines (`21278` bytes)
+**Size**: `469` lines (`21612` bytes)
 
 **Classes:**
 - `class CliTests`
@@ -392,6 +393,7 @@
   - Method `.test_review_with_policy_pack_reference()`
   - Method `.test_record_bare_at_metadata()`
   - Method `.test_demo_out_is_file()`
+  - Method `.test_demo_rerun_same_dir_is_usage_error()`
   - Method `.test_report_out_is_directory()`
   - Method `.test_policy_show_unknown_suggests_packs()`
 
@@ -413,7 +415,7 @@
 ### [`tests/test_ledger.py`](tests/test_ledger.py)
 > *Hash chain, tamper detection and signing tests.*
 
-**Size**: `175` lines (`7553` bytes)
+**Size**: `181` lines (`7806` bytes)
 
 **Classes:**
 - `class LedgerTests`
@@ -437,6 +439,7 @@
   - Method `.test_append_refuses_a_tail_with_an_invalid_hash()`
   - Method `.test_append_refuses_a_negative_tail_seq()`
   - Method `.test_missing_ledger_raises()`
+  - Method `.test_empty_ledger_verdict()`
 
 **Functions:**
 - `def _event(number)`
@@ -480,12 +483,13 @@
 ### [`tests/test_policy.py`](tests/test_policy.py)
 > *Policy parsing, matching and finding tests.*
 
-**Size**: `302` lines (`13086` bytes)
+**Size**: `308` lines (`13345` bytes)
 
 **Classes:**
 - `class PolicyEvaluationTests`
   - Method `.test_default_allow()`
   - Method `.test_deny_glob()`
+  - Method `.test_glob_uses_fnmatch()`
   - Method `.test_require_approval()`
   - Method `.test_amount_over_threshold()`
   - Method `.test_amount_under_threshold()`

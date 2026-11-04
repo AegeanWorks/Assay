@@ -61,6 +61,14 @@ class CliTests(unittest.TestCase):
         from assay.version import VERSION
         self.assertEqual(VERSION, "0.2.0")
 
+    def test_security_matrix_covers_packaged_version(self):
+        from assay.version import VERSION
+        from pathlib import Path as _Path
+        major_minor = ".".join(VERSION.split(".")[:2]) + ".x"
+        matrix = (_Path(__file__).resolve().parent.parent / "SECURITY.md").read_text(
+            encoding="utf-8")
+        self.assertIn(major_minor, matrix)
+
     def test_tampered_ledger_exits_one(self):
         self._record()
         lines = self.ledger.read_text(encoding="utf-8").splitlines()

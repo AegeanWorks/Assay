@@ -298,9 +298,11 @@ python -m unittest discover -s tests -t .
 
 The suite covers canonical serialization, event validation, chain construction, tampered records,
 deleted records, malformed lines, HMAC signing, policy first-match and threshold semantics,
-policy pack loading, missing amounts, evidence packs, CLI exit codes, framework adapters (OpenAI, LangGraph, CrewAI, MCP), and the demo.
+policy pack loading, missing amounts, evidence packs, CLI exit codes, framework adapters (OpenAI, LangGraph, CrewAI, MCP), anchor journal verification, and the demo.
 
 ## Roadmap
+
+Items 1–3 shipped in 0.2.0; items 4–6 are next.
 
 1. Head anchoring to an external append-only store, with a key-id and rotation format (shipped in `assay anchor` and `assay verify --anchors`).
 2. Adapters for MCP servers, LangGraph, CrewAI and the OpenAI Agents SDK (shipped in `assay.adapters` and `assay ingest --format`).

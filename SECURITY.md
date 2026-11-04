@@ -7,6 +7,7 @@ privately so users can rotate keys and preserve affected ledgers before details 
 
 | Version | Supported |
 |---|---|
+| 0.2.x | yes |
 | 0.1.x | yes |
 | older | no |
 

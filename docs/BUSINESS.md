@@ -116,6 +116,10 @@ policy packs, integrations and trust built around them are.
 
 ## 90-day plan
 
+Status through 0.2.0: weeks 1–8 items are complete (demo and threat model published,
+adapters and policy packs shipped, head anchoring landed). Weeks 9–12 remain the active
+commercial focus.
+
 1. Weeks 1-2: publish the demo, evidence pack and threat model; recruit three design partners.
 2. Weeks 3-5: add MCP and framework adapters; publish the verification specification and test
    vectors; run two evidence gap assessments.

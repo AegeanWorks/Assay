@@ -9,8 +9,8 @@
 - **Total Python Modules**: `23`
 - **Total Classes**: `37`
 - **Total Top-Level Functions**: `79`
-- **Total Class Methods**: `200`
-- **Total Source Lines**: `4343`
+- **Total Class Methods**: `201`
+- **Total Source Lines**: `4351`
 
 ---
 
@@ -351,7 +351,7 @@
 ### [`tests/test_cli.py`](tests/test_cli.py)
 > *End-to-end command-line tests through `main`, without spawning processes.*
 
-**Size**: `453` lines (`20912` bytes)
+**Size**: `461` lines (`21278` bytes)
 
 **Classes:**
 - `class CliTests`
@@ -361,6 +361,7 @@
   - Method `.test_record_and_verify()`
   - Method `.test_record_unix_seconds_ts()`
   - Method `.test_version_matches_packaging()`
+  - Method `.test_security_matrix_covers_packaged_version()`
   - Method `.test_tampered_ledger_exits_one()`
   - Method `.test_record_attaches_policy_reference()`
   - Method `.test_review_exit_codes()`

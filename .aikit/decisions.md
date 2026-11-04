@@ -148,3 +148,18 @@ contract, a dependency, a data format or the architecture; IDs are consecutive a
   remove dead `cli._value`, `anchor_module`, `AnchorError`, and `Tuple` surface.
 - **Consequences**: No JSON, digest, or exit-code change. Operators get named `Why`/`Fix`
   triads instead of OS internals (`.`, `.tmp_` names) or silent drops.
+
+### ADR-011: AL-1.1 is the current license; ADR-001 AGPL decision is superseded
+- **Date**: 2026-11-04
+- **Status**: Accepted
+- **Context**: ADR-001 records AGPL-3.0-or-later as Accepted while the shipped tree offers
+  only Aegean License 1.1 with a commercial ACL path (`LICENSE`, `pyproject.toml`,
+  `REUSE.toml`, `CONTRIBUTING.md`). Migration notes already sit after ADR-008 but ADR-001
+  was never marked superseded, so readers get opposite answers.
+- **Decision**: The current license is AL-1.1 (commercial use under ACL-1.0). ADR-001 is
+  retained as history and superseded by this record; versions at or before `v0.1.0-agpl`
+  remain AGPL-3.0 per the migration notes. Missing in-repo pointers (`licenses/ACL-1.0.md`,
+  `licenses/CONTRIBUTING_CLA.md`) stay filed, not fabricated — counsel/maintainer must supply
+  them.
+- **Consequences**: No code or packaging change. Follow-up stays filed: vendor or link the
+  binding ACL/CLA texts so offline evaluators can read the commercial terms.

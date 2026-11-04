@@ -103,6 +103,17 @@ def _bullets(values: Sequence[str]) -> str:
     return ", ".join(_cell(value, 60) for value in values) or "none"
 
 
+def _threshold(value: Any) -> str:
+    if isinstance(value, bool):
+        return str(value)
+    if isinstance(value, (int, float)):
+        try:
+            return f"{value:g}"
+        except (ValueError, TypeError):
+            return str(value)
+    return str(value)
+
+
 def render_markdown(pack: Mapping[str, Any]) -> str:
     """Render the pack as a reviewable Markdown document."""
     ledger = pack["ledger"]
@@ -155,9 +166,9 @@ def render_markdown(pack: Mapping[str, Any]) -> str:
         for rule in policy.get("document", {}).get("rules", []):
             conditions = []
             if "amount_over" in rule:
-                conditions.append(f"amount > {rule['amount_over']:g}")
+                conditions.append(f"amount > {_threshold(rule['amount_over'])}")
             if "amount_under" in rule:
-                conditions.append(f"amount < {rule['amount_under']:g}")
+                conditions.append(f"amount < {_threshold(rule['amount_under'])}")
             if "metadata" in rule:
                 conditions.append(json.dumps(rule["metadata"], sort_keys=True,
                                              separators=(",", ":")))
@@ -238,6 +249,8 @@ def write_report(pack: Mapping[str, Any], path: Path, fmt: str = "md") -> None:
                              allow_nan=False) + "\n"
     elif fmt == "md":
         content = render_markdown(pack)
+        if not content.endswith("\n"):
+            content += "\n"
     else:
         raise ValueError(f"unknown report format {fmt}")
     write_text_atomic(path, content)

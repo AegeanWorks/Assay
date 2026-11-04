@@ -134,3 +134,17 @@ contract, a dependency, a data format or the architecture; IDs are consecutive a
   and empty-anchor verdicts, demo `--out` re-run idempotency, seq-gap quarantine, anchor fork
   detection, glob-language documentation, drift coverage for unpinned events, and launcher/CWD
   parity — each needs a contract decision before implementation.
+
+### ADR-010: CLI error-path hardening without contract change
+- **Date**: 2026-11-04
+- **Status**: Accepted
+- **Context**: Second verified batch from the same 8-module swarm. All items reproduced from
+  swarm reports before fixing; exit codes and schemas stay fixed.
+- **Decision**: Keep exit 0/1/2 and all hashes/digests unchanged while making failures
+  actionable: bare `--metadata @` names the empty `@path`; `demo --out <file>` and
+  `report --out <dir>` raise `ValidationError` naming `--out`; bare policy typos route through
+  `load_pack` suggestions; `Path("pack:name")` resolves like its string form; report thresholds
+  render non-numeric values instead of `:g` crash; Markdown packs end with a trailing newline;
+  remove dead `cli._value`, `anchor_module`, `AnchorError`, and `Tuple` surface.
+- **Consequences**: No JSON, digest, or exit-code change. Operators get named `Why`/`Fix`
+  triads instead of OS internals (`.`, `.tmp_` names) or silent drops.

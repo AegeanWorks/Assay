@@ -422,6 +422,32 @@ class CliTests(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("approve-high-transfers", out)
 
+    def test_record_bare_at_metadata(self):
+        code, _, err = self._run("record", "--ledger", self.ledger, "--actor", "agent:a",
+                                 "--action", "files.read", "--metadata", "@")
+        self.assertEqual(code, 2)
+        self.assertIn("@path is empty", err)
+        self.assertNotIn("'.'", err)
+
+    def test_demo_out_is_file(self):
+        marker = self.root / "afile"
+        marker.write_text("x", encoding="utf-8")
+        code, _, err = self._run("demo", "--out", marker)
+        self.assertEqual(code, 2)
+        self.assertIn("--out", err)
+
+    def test_report_out_is_directory(self):
+        self._record("files.read")
+        code, _, err = self._run("report", "--ledger", self.ledger, "--out", self.root)
+        self.assertEqual(code, 2)
+        self.assertIn("--out", err)
+        self.assertNotIn(".tmp_", err)
+
+    def test_policy_show_unknown_suggests_packs(self):
+        code, _, err = self._run("policy", "show", "nope-xyz")
+        self.assertEqual(code, 2)
+        self.assertIn("available policy packs are", err)
+
 
 if __name__ == "__main__":
     unittest.main()

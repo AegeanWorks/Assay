@@ -233,6 +233,9 @@ class PolicyPackTests(unittest.TestCase):
             load_pack("nonexistent_domain")
         self.assertIn("available policy packs are", ctx.exception.why)
 
+    def test_load_policy_path_pack_resolution(self):
+        self.assertEqual(load_policy(Path("pack:payments")).digest, load_pack("payments").digest)
+
     def test_pack_traversal_rejected(self):
         for bad in ("../examples/policy", "payments/../payments", "/etc/passwd",
                     "payments/../../pyproject"):

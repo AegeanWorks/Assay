@@ -8,13 +8,12 @@ import os
 import sys
 import tempfile
 from pathlib import Path
-from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
+from typing import Any, Dict, List, Mapping, Optional, Sequence
 
-from . import anchor as anchor_module
 from .adapters import parse_event_stream
 from .anchor import AnchorJournal
 from .demo import run_demo
-from .errors import AnchorError, AssayError, LedgerError, ValidationError
+from .errors import AssayError, LedgerError, ValidationError
 from .ledger import Ledger, LedgerState
 from .model import OUTCOMES, Event, normalize_timestamp
 from .policy import (
@@ -166,7 +165,14 @@ def _metadata(text: Optional[str]) -> Dict[str, Any]:
         return {}
     source = "the argument"
     if text.startswith("@"):
-        path = Path(text[1:])
+        raw = text[1:]
+        if not raw.strip():
+            raise ValidationError(
+                "Metadata @path is empty.",
+                "the event needs its metadata before it can be hashed.",
+                "pass a JSON object or @path to a JSON file, e.g. --metadata '{\"amount\": 1}'.",
+            )
+        path = Path(raw)
         source = str(path)
         try:
             text = path.read_text(encoding="utf-8-sig")
@@ -226,14 +232,6 @@ def _cmd_record(args: argparse.Namespace) -> int:
         if policy is not None:
             print(f"Policy: {policy.name} ({policy.digest[:12]}...)")
     return 0
-
-
-def _value(row: Mapping[str, Any], *names: str, default: Any = None) -> Any:
-    for name in names:
-        value = row.get(name)
-        if value is not None and value != "":
-            return value
-    return default
 
 
 def _read_source(path_text: str) -> str:
@@ -403,6 +401,12 @@ def _cmd_report(args: argparse.Namespace) -> int:
     policy = load_policy(args.policy) if args.policy else None
     pack = build_pack(str(args.ledger), state, policy)
     if args.out is not None:
+        if args.out.exists() and args.out.is_dir():
+            raise ValidationError(
+                f"The report --out '{args.out}' is a directory.",
+                "the evidence pack needs a file path to write.",
+                "pass a file path such as --out evidence.md.",
+            )
         write_report(pack, args.out, args.report_format)
         print(f"Wrote {args.out} ({pack['verdict']}, {state.verification.records} record(s))")
     elif args.report_format == "json":
@@ -413,6 +417,12 @@ def _cmd_report(args: argparse.Namespace) -> int:
 
 
 def _cmd_demo(args: argparse.Namespace) -> int:
+    if args.out is not None and args.out.exists() and not args.out.is_dir():
+        raise ValidationError(
+            f"The demo --out '{args.out}' is not a directory.",
+            "the demo writes a ledger plus Markdown and JSON artefacts into one folder.",
+            "pass a directory path such as --out demo-output.",
+        )
     directory = args.out or Path(tempfile.mkdtemp(prefix="assay-demo-"))
     result = run_demo(directory)
     payload = {

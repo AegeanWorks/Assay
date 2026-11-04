@@ -342,7 +342,12 @@ def load_policy(target: Union[Path, str]) -> Policy:
             base = cleaned[:-5] if cleaned.endswith(".json") else cleaned
             if (PACKS_DIR / f"{base}.json").is_file():
                 return load_pack(base)
+            if "/" not in cleaned and "\\" not in cleaned and not path.is_absolute():
+                return load_pack(cleaned)
     else:
+        text_target = str(target)
+        if text_target.strip().startswith("pack:"):
+            return load_pack(text_target.strip()[5:])
         path = Path(target)
     try:
         text = path.read_text(encoding="utf-8")

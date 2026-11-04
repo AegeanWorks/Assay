@@ -109,6 +109,17 @@ class ReportTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             write_report(build_pack(str(self.path), state, None), self.root / "x.txt", "txt")
 
+    def test_render_bad_threshold_and_trailing_newline(self):
+        state = self._state(["files.read"])
+        pack = build_pack(str(self.path), state, _policy())
+        pack["policy"]["document"] = {"rules": [{"id": "x", "action": "a",
+                                                 "effect": "deny", "amount_over": "big"}]}
+        markdown = render_markdown(pack)
+        self.assertIn("amount > big", markdown)
+        md_path = self.root / "evidence.md"
+        write_report(pack, md_path, "md")
+        self.assertTrue(md_path.read_bytes().endswith(b"\n"))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -9,8 +9,8 @@
 - **Total Python Modules**: `23`
 - **Total Classes**: `37`
 - **Total Top-Level Functions**: `79`
-- **Total Class Methods**: `194`
-- **Total Source Lines**: `4275`
+- **Total Class Methods**: `200`
+- **Total Source Lines**: `4343`
 
 ---
 
@@ -82,7 +82,7 @@
 ### [`assay/cli.py`](assay/cli.py)
 > *Command-line interface for recording, verifying and reviewing agent evidence.*
 
-**Size**: `514` lines (`21660` bytes)
+**Size**: `524` lines (`22321` bytes)
 
 **Classes:**
 - `class Parser` - *Turn argument errors into the Assay triad instead of an unlabelled usage dump.*
@@ -97,7 +97,6 @@
 - `def _metadata(text)`
 - `def _policy_reference(policy)`
 - `def _cmd_record(args)`
-- `def _value(row, *names, default)`
 - `def _read_source(path_text)`
 - `def _parse_ingest(text, input_format, actor, policy_ref)`
 - `def _cmd_ingest(args)`
@@ -198,7 +197,7 @@
 ### [`assay/policy.py`](assay/policy.py)
 > *Declarative agent policy evaluation and retrospective findings.*
 
-**Size**: `397` lines (`15942` bytes)
+**Size**: `402` lines (`16210` bytes)
 
 **Classes:**
 - `class Rule` - *One first-match policy rule; `*` is the only glob supported in `action`.*
@@ -229,7 +228,7 @@
 ### [`assay/report.py`](assay/report.py)
 > *Self-contained evidence packs in Markdown and JSON.*
 
-**Size**: `243` lines (`9272` bytes)
+**Size**: `256` lines (`9631` bytes)
 
 **Functions:**
 - `def _event(envelope)`
@@ -237,6 +236,7 @@
 - `def build_pack(ledger_name, state, policy)` - *Assemble the JSON evidence pack from verified records and an optional policy.*
 - `def _cell(value, limit)`
 - `def _bullets(values)`
+- `def _threshold(value)`
 - `def render_markdown(pack)` - *Render the pack as a reviewable Markdown document.*
 - `def write_report(pack, path, fmt)` - *Write Markdown or JSON through the atomic storage helper.*
 
@@ -351,7 +351,7 @@
 ### [`tests/test_cli.py`](tests/test_cli.py)
 > *End-to-end command-line tests through `main`, without spawning processes.*
 
-**Size**: `427` lines (`19844` bytes)
+**Size**: `453` lines (`20912` bytes)
 
 **Classes:**
 - `class CliTests`
@@ -389,6 +389,10 @@
   - Method `.test_policy_list_cli()`
   - Method `.test_policy_show_cli()`
   - Method `.test_review_with_policy_pack_reference()`
+  - Method `.test_record_bare_at_metadata()`
+  - Method `.test_demo_out_is_file()`
+  - Method `.test_report_out_is_directory()`
+  - Method `.test_policy_show_unknown_suggests_packs()`
 
 ---
 
@@ -475,7 +479,7 @@
 ### [`tests/test_policy.py`](tests/test_policy.py)
 > *Policy parsing, matching and finding tests.*
 
-**Size**: `299` lines (`12934` bytes)
+**Size**: `302` lines (`13086` bytes)
 
 **Classes:**
 - `class PolicyEvaluationTests`
@@ -505,6 +509,7 @@
   - Method `.test_load_policy_pack_resolution()`
   - Method `.test_load_policy_bare_json_pack_name()`
   - Method `.test_unknown_pack_raises_validation_error()`
+  - Method `.test_load_policy_path_pack_resolution()`
   - Method `.test_pack_traversal_rejected()`
   - Method `.test_null_metadata_value_requires_key_presence()`
   - Method `.test_metadata_strict_bool_types()`
@@ -522,7 +527,7 @@
 ### [`tests/test_report.py`](tests/test_report.py)
 > *Evidence pack assembly and rendering tests.*
 
-**Size**: `114` lines (`4578` bytes)
+**Size**: `125` lines (`5148` bytes)
 
 **Classes:**
 - `class ReportTests`
@@ -536,6 +541,7 @@
   - Method `.test_cell_handles_none_and_truncation()`
   - Method `.test_write_json_and_markdown()`
   - Method `.test_unknown_format_is_refused()`
+  - Method `.test_render_bad_threshold_and_trailing_newline()`
 
 **Functions:**
 - `def _event(action, **metadata)`

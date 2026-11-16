@@ -312,7 +312,7 @@
               ".aikit/project.json",
               "README.md"
             ],
-            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\assay\\.aikit\\reforge.reviews\\stage-1-cf68e45b66d2.md",
+            "packet": ".aikit/reforge.reviews/stage-1-cf68e45b66d2.md",
             "redacted": 0,
             "reason": "the answer held no findings",
             "method": "host",
@@ -363,7 +363,7 @@
               ".aikit/media.json",
               "README.md"
             ],
-            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\assay\\.aikit\\reforge.reviews\\stage-2-ee77f05ffb67.md",
+            "packet": ".aikit/reforge.reviews/stage-2-ee77f05ffb67.md",
             "redacted": 0,
             "reason": "the answer held no findings",
             "method": "host",
@@ -422,7 +422,7 @@
               ".aikit/media.json",
               "README.md"
             ],
-            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\assay\\.aikit\\reforge.reviews\\stage-3-278bbf8e2ebd.md",
+            "packet": ".aikit/reforge.reviews/stage-3-278bbf8e2ebd.md",
             "redacted": 0,
             "reason": "the answer held no findings",
             "method": "host",
@@ -492,7 +492,7 @@
               "assets/logo.svg",
               "assets/social-preview.svg"
             ],
-            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\assay\\.aikit\\reforge.reviews\\stage-4-7c4872578fb5.md",
+            "packet": ".aikit/reforge.reviews/stage-4-7c4872578fb5.md",
             "redacted": 0,
             "reason": "the answer held no findings",
             "method": "host",
@@ -573,7 +573,7 @@
               "docs/LAUNCH.md",
               "pyproject.toml"
             ],
-            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\assay\\.aikit\\reforge.reviews\\stage-5-104669bb40a5.md",
+            "packet": ".aikit/reforge.reviews/stage-5-104669bb40a5.md",
             "redacted": 0,
             "reason": "the answer held no findings",
             "method": "host",
@@ -651,7 +651,7 @@
               ".aikit/guidelines.md",
               "COMMERCIAL.md"
             ],
-            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\assay\\.aikit\\reforge.reviews\\stage-6-c760c41d7672.md",
+            "packet": ".aikit/reforge.reviews/stage-6-c760c41d7672.md",
             "redacted": 0,
             "reason": "the answer held no findings",
             "method": "host",
@@ -738,7 +738,7 @@
               "REUSE.toml",
               "pyproject.toml"
             ],
-            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\assay\\.aikit\\reforge.reviews\\stage-7-5861564174e9.md",
+            "packet": ".aikit/reforge.reviews/stage-7-5861564174e9.md",
             "redacted": 0,
             "reason": "the answer held no findings",
             "method": "host",
@@ -838,7 +838,7 @@
               "tests/test_cli.py",
               "tests/test_policy.py"
             ],
-            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\assay\\.aikit\\reforge.reviews\\stage-8-9249ae42b165.md",
+            "packet": ".aikit/reforge.reviews/stage-8-9249ae42b165.md",
             "redacted": 0,
             "reason": "the answer held no findings",
             "method": "host",
@@ -1032,7 +1032,7 @@
               "tests/test_policy.py",
               "tests/test_report.py"
             ],
-            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\assay\\.aikit\\reforge.reviews\\stage-9-466c69bbd7b4.md",
+            "packet": ".aikit/reforge.reviews/stage-9-466c69bbd7b4.md",
             "redacted": 0,
             "reason": "",
             "findings": [
@@ -1172,7 +1172,7 @@
               ".gitignore",
               "README.md"
             ],
-            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\assay\\.aikit\\reforge.reviews\\stage-10-a37b49f88ac7.md",
+            "packet": ".aikit/reforge.reviews/stage-10-a37b49f88ac7.md",
             "redacted": 0,
             "reason": "the answer held no findings",
             "findings": []
@@ -1268,7 +1268,7 @@
               "tests/test_adapters.py",
               "tests/test_ledger.py"
             ],
-            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\assay\\.aikit\\reforge.reviews\\stage-11-c1a774b16bd1.md",
+            "packet": ".aikit/reforge.reviews/stage-11-c1a774b16bd1.md",
             "redacted": 0,
             "reason": "the answer held no findings",
             "findings": []
@@ -1356,7 +1356,7 @@
             "status": "reviewed",
             "rejected": [],
             "files": [],
-            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\assay\\.aikit\\reforge.reviews\\stage-12-2696f74ecd52.md",
+            "packet": ".aikit/reforge.reviews/stage-12-2696f74ecd52.md",
             "redacted": 0,
             "reason": "the answer held no findings",
             "findings": []
@@ -1446,7 +1446,7 @@
             "status": "reviewed",
             "rejected": [],
             "files": [],
-            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\assay\\.aikit\\reforge.reviews\\stage-13-61fc0ab2a4df.md",
+            "packet": ".aikit/reforge.reviews/stage-13-61fc0ab2a4df.md",
             "redacted": 0,
             "reason": "the answer held no findings",
             "findings": []

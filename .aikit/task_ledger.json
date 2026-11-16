@@ -1,11 +1,11 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "assay-reforge-run1-close",
+    "task_id": "assay-reforge-state-migration",
     "last_phase": "phase 4",
     "active_phase": 5,
     "status": "completed",
-    "updated_at": 1794860397.4307213,
+    "updated_at": 1794861233.26089,
     "owner": "claude:vibe",
     "started_by": "claude:vibe",
     "continuations": [],
@@ -15,44 +15,11 @@
         "path": "projects/assay"
       }
     ],
-    "completed_at": 1794860398.0694306,
-    "completed_head": "8622b64d7462ae67373d8d1799b182f48455a25d",
-    "completed_tree": "83dbfcbd927b85f9143511102d951022bff5e80a"
+    "completed_at": 1794861233.708563,
+    "completed_head": "55c258b3a0d7d9a9a19527d5b2d30dac334b13ff",
+    "completed_tree": "830360d64472bff137727971e402683d8e233a9e"
   },
   "checkpoints": [
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 2",
-      "phase_num": 3,
-      "description": "Reforge stage 2: stage 2 host review reviewed; run active; coverage 4/4",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793450604.0614152,
-      "timestamp_str": "2026-10-31 15:43:24",
-      "agent": "github"
-    },
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 3",
-      "phase_num": 3,
-      "description": "Reforge stage 3: stage 3 host review reviewed; run active; coverage 4/4",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793450621.7923188,
-      "timestamp_str": "2026-10-31 15:43:41",
-      "agent": "github"
-    },
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 4",
-      "phase_num": 3,
-      "description": "Reforge stage 4: stage 4 host review reviewed; run active; coverage 5/5",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793450629.404043,
-      "timestamp_str": "2026-10-31 15:43:49",
-      "agent": "github"
-    },
     {
       "task_id": "reforge:run-1",
       "phase": "reforge stage 5",
@@ -275,6 +242,65 @@
       "timestamp_str": "2026-11-16 23:19:58",
       "agent": "claude:vibe",
       "head": "8622b64d7462ae67373d8d1799b182f48455a25d",
+      "delivery": {
+        "roots": [
+          "."
+        ],
+        "forced": false
+      }
+    },
+    {
+      "task_id": "assay-reforge-state-migration",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/1] Plan: own the reforge-state migration to portable paths under a ledger task, then re-issue the delivery verdict",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794861224.5036964,
+      "timestamp_str": "2026-11-16 23:33:44",
+      "agent": "claude:vibe",
+      "impact_assessment": {
+        "why": "the strict verdict must describe the committed tree: the migration commit landed after the previous task completed, so ADR-419 marks the ledger stale and refuses delivery",
+        "benefits": "reforge.json keeps 13 portable packet/roots paths in tracked memory; the recorded 4 absolute test commands stay per ADR-446; a clean verdict becomes issuable",
+        "risks": "contract: state-file shapes only, no code; dependency: scripts/path_migration.py assumes packet/roots scope; concurrency: single agent this session; state: ledger must stay ahead of completed tasks",
+        "mitigation": "explicit staging of the two state files; gates rerun on the committed tree before --checklists passed; no push without authorization"
+      },
+      "plan_digest": "35e3efa178ab50a4935d64af6f56539febd0e37ac7d2315cd39a499457a1a2bb",
+      "workspaces": [
+        {
+          "name": "assay",
+          "path": "projects/assay"
+        }
+      ]
+    },
+    {
+      "task_id": "assay-reforge-state-migration",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "4/4 gates pass on the committed tree after the state migration",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794861233.26089,
+      "timestamp_str": "2026-11-16 23:33:53",
+      "agent": "claude:vibe",
+      "checklists": "passed",
+      "workspaces": [
+        {
+          "name": "assay",
+          "path": "projects/assay"
+        }
+      ]
+    },
+    {
+      "task_id": "assay-reforge-state-migration",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'assay-reforge-state-migration' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794861233.7503586,
+      "timestamp_str": "2026-11-16 23:33:53",
+      "agent": "claude:vibe",
+      "head": "55c258b3a0d7d9a9a19527d5b2d30dac334b13ff",
       "delivery": {
         "roots": [
           "."

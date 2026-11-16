@@ -216,3 +216,10 @@ contract, a dependency, a data format or the architecture; IDs are consecutive a
   (envelope, seq, prev, event, hash, mac) in the Verification prose.
 - **Consequences**: No JSON, digest, or exit-code change. Demo output now matches review
   order by construction.
+
+### ADR-016: Canonical URLs replaced the filed-not-fabricated license pointers
+- **Date**: 2026-11-16
+- **Status**: Accepted
+- **Context**: ADR-011 recorded the ACL/CLA in-repo pointers as filed, not fabricated, with counsel to supply them; commit 51452c5 resolved that follow-up by citing the canonical URLs in LICENSE, its LICENSES mirror and COMMERCIAL.md
+- **Decision**: the license record cites https://github.com/AegeanWorks/Aegean-Licensing/blob/master/licenses/ACL-1.0.md and CONTRIBUTING_CLA.md; ADR-011 is retained as history and its follow-up is resolved
+- **Consequences**: offline evaluators follow the citation to the hosted canonical text; the recorded-gone state stays honest; no code or packaging change

@@ -1,11 +1,11 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "assay-reforge-state-migration",
-    "last_phase": "phase 4",
-    "active_phase": 5,
-    "status": "completed",
-    "updated_at": 1794861233.26089,
+    "task_id": "assay-create-wrap-guard-test",
+    "last_phase": "phase 2",
+    "active_phase": 2,
+    "status": "in_progress",
+    "updated_at": 1794861310.021755,
     "owner": "claude:vibe",
     "started_by": "claude:vibe",
     "continuations": [],
@@ -15,22 +15,14 @@
         "path": "projects/assay"
       }
     ],
-    "completed_at": 1794861233.708563,
-    "completed_head": "55c258b3a0d7d9a9a19527d5b2d30dac334b13ff",
-    "completed_tree": "830360d64472bff137727971e402683d8e233a9e"
+    "impact_assessment": {
+      "why": "the stage-14 fix narrows the TypeError wrap; the landed test asserts only that ValidationError appears, so the added raise branch has no failing-first test; ADR-011's consequence is stale after 51452c5 linked the canonical URLs",
+      "benefits": "the internal-failure path stays surfaced instead of mislabelled; the license record names its own superseding decision",
+      "risks": "contract: ValidationError behavior unchanged (unknown kwarg still wrapped); dependency: unittest.mock only; concurrency: single agent this session; state: one module test, budget 50ms",
+      "mitigation": "read tests/test_model.py slices first; explicit staging of test + ledger; full gate run before --checklists passed; no push without authorization"
+    }
   },
   "checkpoints": [
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 5",
-      "phase_num": 3,
-      "description": "Reforge stage 5: stage 5 host review reviewed; run active; coverage 22/22",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793450641.5998774,
-      "timestamp_str": "2026-10-31 15:44:01",
-      "agent": "github"
-    },
     {
       "task_id": "reforge:run-1",
       "phase": "reforge stage 6",
@@ -307,6 +299,30 @@
         ],
         "forced": false
       }
+    },
+    {
+      "task_id": "assay-create-wrap-guard-test",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/1] Plan: pin the create() TypeError re-raise guard with a test and record the ADR that resolves the ADR-011 follow-up",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794861310.021755,
+      "timestamp_str": "2026-11-16 23:35:10",
+      "agent": "claude:vibe",
+      "impact_assessment": {
+        "why": "the stage-14 fix narrows the TypeError wrap; the landed test asserts only that ValidationError appears, so the added raise branch has no failing-first test; ADR-011's consequence is stale after 51452c5 linked the canonical URLs",
+        "benefits": "the internal-failure path stays surfaced instead of mislabelled; the license record names its own superseding decision",
+        "risks": "contract: ValidationError behavior unchanged (unknown kwarg still wrapped); dependency: unittest.mock only; concurrency: single agent this session; state: one module test, budget 50ms",
+        "mitigation": "read tests/test_model.py slices first; explicit staging of test + ledger; full gate run before --checklists passed; no push without authorization"
+      },
+      "plan_digest": "b12b8793b244f7c958f3b89f4788cc997d475e86c4f6abf286d849983dc782fb",
+      "workspaces": [
+        {
+          "name": "assay",
+          "path": "projects/assay"
+        }
+      ]
     }
   ]
 }

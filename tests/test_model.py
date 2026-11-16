@@ -2,6 +2,7 @@
 
 import json
 import unittest
+from unittest import mock
 
 from assay.errors import ValidationError
 from assay.model import Event, canonical_bytes, normalize_timestamp
@@ -118,6 +119,13 @@ class EventTests(unittest.TestCase):
     def test_create_unknown_kwarg_raises_validation_error(self):
         with self.assertRaises(ValidationError):
             Event.create("agent:a", "tool.call", foo=1)
+
+    def test_internal_typeerror_is_not_relabelled(self):
+        """A TypeError from inside construction re-raises; only unknown fields are wrapped."""
+        with mock.patch.object(Event, "__init__",
+                               side_effect=TypeError("boom: an internal failure")):
+            with self.assertRaises(TypeError):
+                Event.create("agent:a", "tool.call")
 
     def test_int_key_metadata_rejected(self):
         with self.assertRaises(ValidationError):

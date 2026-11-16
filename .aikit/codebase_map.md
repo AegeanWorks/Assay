@@ -9,8 +9,8 @@
 - **Total Python Modules**: `23`
 - **Total Classes**: `37`
 - **Total Top-Level Functions**: `79`
-- **Total Class Methods**: `215`
-- **Total Source Lines**: `4475`
+- **Total Class Methods**: `216`
+- **Total Source Lines**: `4483`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`23` module(s))
@@ -462,7 +462,7 @@
 ### [`tests/test_model.py`](tests/test_model.py)
 > *Event contract and canonical JSON tests.*
 
-**Size**: `128` lines (`5062` bytes)
+**Size**: `136` lines (`5475` bytes)
 
 **Classes:**
 - `class CanonicalJsonTests`
@@ -489,6 +489,7 @@
   - Method `.test_metadata_deep_copy_on_create()`
   - Method `.test_to_dict_returns_independent_copy()`
   - Method `.test_create_unknown_kwarg_raises_validation_error()`
+  - Method `.test_internal_typeerror_is_not_relabelled()` - *A TypeError from inside construction re-raises; only unknown fields are wrapped.*
   - Method `.test_int_key_metadata_rejected()`
 
 ---

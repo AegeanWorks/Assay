@@ -1,56 +1,25 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "assay-audit-waves",
-    "last_phase": "in_progress",
+    "task_id": "assay-reforge-run1-close",
+    "last_phase": "phase 4",
     "active_phase": 5,
     "status": "completed",
-    "updated_at": 1793722005.8269277,
-    "owner": "kilo:audit",
-    "started_by": "kilo:audit",
+    "updated_at": 1794860397.4307213,
+    "owner": "claude:vibe",
+    "started_by": "claude:vibe",
     "continuations": [],
-    "impact_assessment": {
-      "why": "mcp ignores explicit outcomes and bare json pack name fails",
-      "benefits": "consistent outcome contract and working policy show",
-      "risks": "contract: mcp error precedence preserved; dependency: none; concurrency: none; state: none",
-      "mitigation": "failing-first repro plus full unittest and aikit check"
-    },
-    "completed_at": 1793722006.0097752
+    "workspaces": [
+      {
+        "name": "assay",
+        "path": "projects/assay"
+      }
+    ],
+    "completed_at": 1794860398.0694306,
+    "completed_head": "8622b64d7462ae67373d8d1799b182f48455a25d",
+    "completed_tree": "83dbfcbd927b85f9143511102d951022bff5e80a"
   },
   "checkpoints": [
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 13",
-      "phase_num": 3,
-      "description": "Reforge stage 13: run stopped at stage 13; resume it with `reforge resume`",
-      "files_affected": [],
-      "status": "suspended",
-      "timestamp": 1793284990.4224179,
-      "timestamp_str": "2026-10-29 17:43:10",
-      "agent": "opencode"
-    },
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 13",
-      "phase_num": 3,
-      "description": "Reforge stage 13: run resumed",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793450377.3418083,
-      "timestamp_str": "2026-10-31 15:39:37",
-      "agent": "github"
-    },
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 1",
-      "phase_num": 3,
-      "description": "Reforge stage 1: stage 1 host review reviewed; run active; coverage 8/8",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793450589.211188,
-      "timestamp_str": "2026-10-31 15:43:09",
-      "agent": "github"
-    },
     {
       "task_id": "reforge:run-1",
       "phase": "reforge stage 2",
@@ -253,6 +222,65 @@
       "timestamp_str": "2026-11-16 23:13:34",
       "agent": "unidentified",
       "operator_task": "assay-audit-waves"
+    },
+    {
+      "task_id": "assay-reforge-run1-close",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/1] Plan: own the reforge run-1 wave commits and stage-14 repair under a ledger task, then publish the stage records",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794860307.853381,
+      "timestamp_str": "2026-11-16 23:18:27",
+      "agent": "claude:vibe",
+      "impact_assessment": {
+        "why": "check --strict refuses delivery while the completed 'assay-audit-waves' task has 11 later non-bookkeeping commits (ADR-419) and reforge shows 9 verified-but-uncommitted stage records",
+        "benefits": "delivery verdict becomes issuable; reforge run state is committed bookkeeping; the stage-14 review and repair have a named owning task",
+        "risks": "contract: ledger record shapes only, no code paths; dependency: none; concurrency: single agent in this session takes the task openly; state: ADR-419 staleness guard must clear",
+        "mitigation": "explicit staging of ledger and reforge state only; gates rerun on the committed tree before --checklists passed; no push without authorization"
+      },
+      "plan_digest": "6342aa5e71ed25aea23a364ee955403de1f3fa2dba6eea7f684eafd2f2aee278",
+      "workspaces": [
+        {
+          "name": "assay",
+          "path": "projects/assay"
+        }
+      ]
+    },
+    {
+      "task_id": "assay-reforge-run1-close",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "Reforge run-1 is complete over the full history: stage 14 reviewed 181/181 hunks via the host; the accepted finding is applied and the wave repairs are committed under a ledger task",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794860397.4307213,
+      "timestamp_str": "2026-11-16 23:19:57",
+      "agent": "claude:vibe",
+      "checklists": "passed",
+      "workspaces": [
+        {
+          "name": "assay",
+          "path": "projects/assay"
+        }
+      ]
+    },
+    {
+      "task_id": "assay-reforge-run1-close",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'assay-reforge-run1-close' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794860398.1320863,
+      "timestamp_str": "2026-11-16 23:19:58",
+      "agent": "claude:vibe",
+      "head": "8622b64d7462ae67373d8d1799b182f48455a25d",
+      "delivery": {
+        "roots": [
+          "."
+        ],
+        "forced": false
+      }
     }
   ]
 }

@@ -8,6 +8,8 @@
 
 **Tamper-evident audit evidence for AI agents.**
 
+> **Archived**: Full-history Reforge audit complete (43 commits, run-1); no active backlog; verified through check --strict and pushed (archived 2026-11-16). This project is read-only; its GitHub repository is archived.
+
 Assay turns agent tool calls into a hash-chained evidence ledger and a self-contained pack that
 an auditor, customer or insurer can verify offline. It is local-first, zero-dependency, and
 licensed **AL-1.1** with a commercial path for companies that embed it in proprietary

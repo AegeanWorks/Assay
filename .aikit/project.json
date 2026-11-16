@@ -60,5 +60,11 @@
     "source-available",
     "aegean-license",
     "commercial-license"
-  ]
+  ],
+  "archived": true,
+  "archived_at": "2026-11-16",
+  "archive_reason": "Full-history Reforge audit complete (43 commits, run-1); no active backlog; verified through check --strict and pushed",
+  "archive_repo": "AegeanWorks/Assay",
+  "archive_description": "[ARCHIVED] Tamper-evident audit evidence for AI agents.",
+  "archive_origin": "projects/assay"
 }

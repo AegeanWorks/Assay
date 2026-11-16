@@ -2,10 +2,10 @@
   "version": 1,
   "active_task": {
     "task_id": "assay-create-wrap-guard-test",
-    "last_phase": "phase 2",
-    "active_phase": 2,
-    "status": "in_progress",
-    "updated_at": 1794861310.021755,
+    "last_phase": "phase 4",
+    "active_phase": 5,
+    "status": "completed",
+    "updated_at": 1794861464.1489513,
     "owner": "claude:vibe",
     "started_by": "claude:vibe",
     "continuations": [],
@@ -15,36 +15,11 @@
         "path": "projects/assay"
       }
     ],
-    "impact_assessment": {
-      "why": "the stage-14 fix narrows the TypeError wrap; the landed test asserts only that ValidationError appears, so the added raise branch has no failing-first test; ADR-011's consequence is stale after 51452c5 linked the canonical URLs",
-      "benefits": "the internal-failure path stays surfaced instead of mislabelled; the license record names its own superseding decision",
-      "risks": "contract: ValidationError behavior unchanged (unknown kwarg still wrapped); dependency: unittest.mock only; concurrency: single agent this session; state: one module test, budget 50ms",
-      "mitigation": "read tests/test_model.py slices first; explicit staging of test + ledger; full gate run before --checklists passed; no push without authorization"
-    }
+    "completed_at": 1794861464.6159964,
+    "completed_head": "a904f86d4c2457c499f4f95aef93ea1a7ac5d9c5",
+    "completed_tree": "68faa02cef5aaf13e2a8d5ca0479baf693c36996"
   },
   "checkpoints": [
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 6",
-      "phase_num": 3,
-      "description": "Reforge stage 6: stage 6 host review reviewed; run active; coverage 3/3",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793450696.3516617,
-      "timestamp_str": "2026-10-31 15:44:56",
-      "agent": "github"
-    },
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 7",
-      "phase_num": 3,
-      "description": "Reforge stage 7: stage 7 host review reviewed; run active; coverage 15/15",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793450706.9288666,
-      "timestamp_str": "2026-10-31 15:45:06",
-      "agent": "github"
-    },
     {
       "task_id": "reforge:run-1",
       "phase": "reforge stage 8",
@@ -323,6 +298,41 @@
           "path": "projects/assay"
         }
       ]
+    },
+    {
+      "task_id": "assay-create-wrap-guard-test",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "4/4 gates pass on the committed tree: test_model holds the re-raise guard, ADR-016 resolves the ADR-011 follow-up",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794861464.1489513,
+      "timestamp_str": "2026-11-16 23:37:44",
+      "agent": "claude:vibe",
+      "checklists": "passed",
+      "workspaces": [
+        {
+          "name": "assay",
+          "path": "projects/assay"
+        }
+      ]
+    },
+    {
+      "task_id": "assay-create-wrap-guard-test",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'assay-create-wrap-guard-test' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794861464.6579187,
+      "timestamp_str": "2026-11-16 23:37:44",
+      "agent": "claude:vibe",
+      "head": "a904f86d4c2457c499f4f95aef93ea1a7ac5d9c5",
+      "delivery": {
+        "roots": [
+          "."
+        ],
+        "forced": false
+      }
     }
   ]
 }

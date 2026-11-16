@@ -204,6 +204,8 @@ class Event:
         try:
             return cls(actor=actor, action=action, **values)
         except TypeError as exc:
+            if "unexpected keyword argument" not in str(exc):
+                raise
             raise ValidationError(
                 f"Unknown event field(s): {exc}.",
                 "unknown fields would be excluded from the digest and silently unverifiable.",

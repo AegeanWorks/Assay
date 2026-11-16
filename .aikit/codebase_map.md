@@ -1,7 +1,7 @@
 # Codebase Map & Symbol Catalog 🗺️
 
 > **AUTO-GENERATED & VERIFIED BY `scripts/update_knowledge_base.py`**
-> This document provides an automated, up-to-date registry of all modules, classes, and exported functions across this repository.
+> This document catalogues Python modules, classes, and exported functions. See Map Coverage for any stack it does not index.
 
 ---
 
@@ -10,7 +10,11 @@
 - **Total Classes**: `37`
 - **Total Top-Level Functions**: `79`
 - **Total Class Methods**: `215`
-- **Total Source Lines**: `4473`
+- **Total Source Lines**: `4475`
+
+## 🧭 Map Coverage
+- **Indexed**: python (`23` module(s))
+- **Not indexed by this map**: none (no non-Python source files were found)
 
 ---
 
@@ -168,7 +172,7 @@
 ### [`assay/model.py`](assay/model.py)
 > *Event contract and canonical serialization for the evidence ledger.*
 
-**Size**: `262` lines (`10752` bytes)
+**Size**: `264` lines (`10836` bytes)
 
 **Classes:**
 - `class Event` - *One agent action, normalized and validated before hashing.*

@@ -19,47 +19,6 @@
   },
   "checkpoints": [
     {
-      "task_id": "assay-policies-v1",
-      "phase": "phase 4",
-      "phase_num": 4,
-      "description": "[4/4] Curated policy packs, pack resolution, CLI policy commands, ADR-008; checklists: passed",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1792832164.2931077,
-      "timestamp_str": "2026-10-24 11:56:04"
-    },
-    {
-      "task_id": "assay-policies-v1",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'assay-policies-v1' completed successfully.",
-      "status": "completed",
-      "timestamp": 1792832170.1018786,
-      "timestamp_str": "2026-10-24 11:56:10"
-    },
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 12",
-      "phase_num": 3,
-      "description": "Reforge stage 12: run resumed",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793284969.3708026,
-      "timestamp_str": "2026-10-29 17:42:49",
-      "agent": "opencode"
-    },
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 13",
-      "phase_num": 3,
-      "description": "Reforge stage 13: window 31, 1 commit(s), 0 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793284975.265461,
-      "timestamp_str": "2026-10-29 17:42:55",
-      "agent": "opencode"
-    },
-    {
       "task_id": "reforge:run-1",
       "phase": "reforge stage 13",
       "phase_num": 3,
@@ -246,6 +205,54 @@
       "timestamp": 1793722006.0097766,
       "timestamp_str": "2026-11-03 19:06:46",
       "agent": "kilo:audit"
+    },
+    {
+      "task_id": "reforge:run-1",
+      "phase": "reforge stage 13",
+      "phase_num": 3,
+      "description": "Reforge stage 13: run resumed",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794859580.0318618,
+      "timestamp_str": "2026-11-16 23:06:20",
+      "agent": "unidentified",
+      "operator_task": "assay-audit-waves"
+    },
+    {
+      "task_id": "reforge:run-1",
+      "phase": "reforge stage 14",
+      "phase_num": 3,
+      "description": "Reforge stage 14: window 42, 12 commit(s), 27 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794859607.5186126,
+      "timestamp_str": "2026-11-16 23:06:47",
+      "agent": "unidentified",
+      "operator_task": "assay-audit-waves"
+    },
+    {
+      "task_id": "reforge:run-1",
+      "phase": "reforge stage 14",
+      "phase_num": 3,
+      "description": "Reforge stage 14: stage 14 host review reviewed; run completed; coverage 181/181",
+      "files_affected": [],
+      "status": "completed",
+      "timestamp": 1794859943.4865205,
+      "timestamp_str": "2026-11-16 23:12:23",
+      "agent": "unidentified",
+      "operator_task": "assay-audit-waves"
+    },
+    {
+      "task_id": "reforge:run-1",
+      "phase": "reforge stage 14",
+      "phase_num": 3,
+      "description": "Reforge stage 14: stage 14 host review reviewed; run completed; coverage 181/181",
+      "files_affected": [],
+      "status": "completed",
+      "timestamp": 1794860014.3217082,
+      "timestamp_str": "2026-11-16 23:13:34",
+      "agent": "unidentified",
+      "operator_task": "assay-audit-waves"
     }
   ]
 }
